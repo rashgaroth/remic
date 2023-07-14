@@ -33,15 +33,14 @@
     "react/function-component-definition": 0,
     "import/no-extraneous-dependencies": 0,
     "react/jsx-props-no-spreading": 0,
-    "prettier/prettier": [
-      "error",
-      {
-        "endOfLine": "auto"
-      },
-      {
-        "usePrettierrc": true
-      }
-    ]
+    "max-len": "off",
+    "@typescript-eslint/comma-dangle": "off",
+    "react/require-default-props": "off",
+    "react/button-has-type": "off",
+    "@typescript-eslint/no-unused-vars": "off",
+    "no-multi-assign": "off",
+    "operator-linebreak": "off",
+    "jsx-a11y/anchor-is-valid": "off"
   },
   "settings": {
     "react": {
