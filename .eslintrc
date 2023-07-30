@@ -1,19 +1,12 @@
 {
   "parser": "@typescript-eslint/parser",
-  "plugins": [
-    "@typescript-eslint",
-    "react-hooks",
-    "react",
-    "import",
-    "prettier"
-  ],
+  "plugins": ["react", "import", "prettier", "jsx-a11y"],
   "extends": [
-    "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:react/recommended",
-    "plugin:react-hooks/recommended",
+    "plugin:jsx-a11y/recommended",
     "airbnb",
-    "airbnb-typescript"
+    "airbnb-typescript",
+    "prettier",
+    "prettier/react"
   ],
   "parserOptions": {
     "ecmaFeatures": {
@@ -29,18 +22,14 @@
     "es6": true
   },
   "rules": {
-    "quotes": ["error", "single"],
-    "react/function-component-definition": 0,
-    "import/no-extraneous-dependencies": 0,
-    "react/jsx-props-no-spreading": 0,
-    "max-len": "off",
-    "@typescript-eslint/comma-dangle": "off",
-    "react/require-default-props": "off",
-    "react/button-has-type": "off",
-    "@typescript-eslint/no-unused-vars": "off",
-    "no-multi-assign": "off",
-    "operator-linebreak": "off",
-    "jsx-a11y/anchor-is-valid": "off"
+    "semi": 0,
+    "react/jsx-filename-extension": [1, { "extensions": [".ts", ".tsx"] }],
+    "prettier/prettier": [
+      "error",
+      {
+        "semi": false
+      }
+    ]
   },
   "settings": {
     "react": {

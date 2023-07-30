@@ -29,7 +29,7 @@ function Button({ loading, ...rest }: ButtonProps) {
   return (
     <button
       className={clsxm(
-        `rounded-lg bg-opacity-50 hover:bg-opacity-40 
+        `rounded-lg bg-opacity-25 hover:bg-opacity-40 
         shadow-md py-2 px-5 grid gap-1 grid-flow-col-dense
         items-center overflow-hidden justify-center`,
         'font-poppins font-extrabold',

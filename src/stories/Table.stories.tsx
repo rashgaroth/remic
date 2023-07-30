@@ -22,7 +22,7 @@ export default meta;
 
 const TableTemplate: StoryFn<ButtonProps> = (args) => (
   <div className="flex flex-col space-y-2">
-    <p>Common buttons</p>
+    <p>Common tables</p>
     <Table {...args} />
   </div>
 );

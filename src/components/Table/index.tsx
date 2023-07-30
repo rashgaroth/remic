@@ -9,7 +9,6 @@ const people = [
     email: 'lindsay.walton@example.com',
     role: 'Member',
   },
-  // More people...
 ];
 
 function Table() {
