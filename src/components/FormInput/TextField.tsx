@@ -218,7 +218,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
             <label
               htmlFor={id}
               className={clsxm(
-                'block text-sm font-medium leading-6 text-gray-900',
+                'block text-sm z-20 font-medium leading-6 text-gray-900',
                 labelClassName
               )}
               {...labelProps}
@@ -260,7 +260,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
               }
             }}
             className={clsxm(
-              `px-2 rounded-md border-0 py-2 pr-10 ring-1 focus:ring-2 ring-inset block w-full focus:ring-inset sm:text-sm sm:leading-6`,
+              `px-2 rounded-md border-0 py-2 pr-10 z-20 ring-1 focus:ring-2 ring-inset block w-full focus:ring-inset sm:text-sm sm:leading-6`,
               'delay-100 duration-300 ease-in-out transition',
               getClasses(),
               className,
@@ -279,7 +279,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
               }
             }}
           />
-          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+          <div className="absolute inset-y-0 right-0 flex items-center pr-3 z-50">
             {tmpError ? (
               <RenderErrorIcon
                 EndIcon={endIcon}

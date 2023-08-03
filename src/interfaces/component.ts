@@ -6,7 +6,6 @@ import {
   LabelHTMLAttributes,
   ReactNode,
 } from 'react';
-import { TextField } from '../components';
 
 export type ButtonProps = {
   loading?: boolean;
@@ -67,7 +66,11 @@ export type AsyncTextFieldProps = {
   data: AsyncDropdownData[];
   onChange?: (value: AsyncDropdownData) => void;
   onOpen?: () => void;
-  onClose?: () => void;
+  onClose?: (
+    e:
+      | React.FocusEvent<HTMLInputElement, Element>
+      | React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => void;
   initValue?: AsyncDropdownData;
   dropdownValue?: AsyncDropdownData;
 } & TextFieldProps;
