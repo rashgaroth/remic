@@ -64,7 +64,7 @@ export type AsyncTextFieldProps = {
   loaderColor?: string;
   loading?: boolean;
   data: AsyncDropdownData[];
-  onChange?: (value: AsyncDropdownData) => void;
+  onChange?: (value: AsyncDropdownData | null) => void;
   onOpen?: () => void;
   onClose?: (
     e:
@@ -73,4 +73,5 @@ export type AsyncTextFieldProps = {
   ) => void;
   initValue?: AsyncDropdownData;
   dropdownValue?: AsyncDropdownData;
+  CloseIcon?: ReactNode;
 } & TextFieldProps;

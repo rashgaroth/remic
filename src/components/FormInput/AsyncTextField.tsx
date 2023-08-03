@@ -25,6 +25,7 @@ export default function AsyncTextField(props: AsyncTextFieldProps) {
     onClose,
     initValue,
     dropdownValue,
+    CloseIcon,
     ...rest
   } = props;
   const [isFocus, setIsFocus] = React.useState(false);
@@ -73,6 +74,63 @@ export default function AsyncTextField(props: AsyncTextFieldProps) {
     }
   }, [dropdownValue]);
 
+  const getEndIcon = () => {
+    if (loading) {
+      return <Loader color={loaderColor} />;
+    }
+
+    if (!loading && isFocus) {
+      if (CloseIcon) {
+        return (
+          <div
+            onClick={() => {
+              setCurrentValue('');
+              if (onChange && safeFunction(onChange)) {
+                onChange(null);
+              }
+            }}
+          >
+            {CloseIcon}
+          </div>
+        );
+      }
+      return (
+        <Close
+          className="inline mr-1 w-4 h-4 text-gray-400 cursor-pointer"
+          onClick={() => setIsFocus(false)}
+        />
+      );
+    }
+    if (!loading && !isFocus && currentValue !== '') {
+      if (CloseIcon) {
+        return (
+          <div
+            onClick={() => {
+              setCurrentValue('');
+              if (onChange && safeFunction(onChange)) {
+                onChange(null);
+              }
+            }}
+          >
+            {CloseIcon}
+          </div>
+        );
+      }
+      return (
+        <Close
+          className="inline mr-1 w-4 h-4 text-gray-400 cursor-pointer"
+          onClick={() => {
+            setCurrentValue('');
+            if (onChange && safeFunction(onChange)) {
+              onChange(null);
+            }
+          }}
+        />
+      );
+    }
+    return null;
+  };
+
   return (
     <div className="flex flex-col z-20">
       <TextField
@@ -102,16 +160,7 @@ export default function AsyncTextField(props: AsyncTextFieldProps) {
         className="px-5"
         role="combobox"
         spellCheck={false}
-        endIcon={
-          loading ? (
-            <Loader color={loaderColor} />
-          ) : isFocus ? (
-            <Close
-              className="inline mr-1 w-4 h-4 text-gray-400 cursor-pointer"
-              onClick={() => setIsFocus(false)}
-            />
-          ) : null
-        }
+        endIcon={getEndIcon()}
         value={currentValue}
       />
       <animated.div
