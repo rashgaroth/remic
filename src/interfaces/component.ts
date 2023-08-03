@@ -1,10 +1,12 @@
 import {
   ButtonHTMLAttributes,
+  ChangeEvent,
   ComponentProps,
   InputHTMLAttributes,
   LabelHTMLAttributes,
   ReactNode,
 } from 'react';
+import { TextField } from '../components';
 
 export type ButtonProps = {
   loading?: boolean;
@@ -30,7 +32,7 @@ export type Rules = {
   onError?: (value: 'max' | 'required' | 'min') => string;
 };
 
-export type TextFieldProps = {
+export type TextFieldProps<T = HTMLInputElement> = {
   label?: string;
   fullWidth?: boolean;
   width?: number;
@@ -51,4 +53,21 @@ export type TextFieldProps = {
   labelProps?: LabelHTMLAttributes<HTMLLabelElement>;
   LabelComponent?: ReactNode;
   labelClassName?: ComponentProps<'label'>['className'];
-} & InputHTMLAttributes<HTMLInputElement>;
+} & InputHTMLAttributes<T>;
+
+export type AsyncDropdownData = {
+  label: string;
+  value: any;
+};
+
+export type AsyncTextFieldProps = {
+  onSearch?: (value: ChangeEvent<HTMLInputElement>) => void;
+  loaderColor?: string;
+  loading?: boolean;
+  data: AsyncDropdownData[];
+  onChange?: (value: AsyncDropdownData) => void;
+  onOpen?: () => void;
+  onClose?: () => void;
+  initValue?: AsyncDropdownData;
+  dropdownValue?: AsyncDropdownData;
+} & TextFieldProps;

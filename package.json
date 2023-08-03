@@ -95,6 +95,7 @@
     "@headlessui/react": "^1.7.15",
     "@heroicons/react": "^2.0.18",
     "@mui/x-date-pickers": "^6.10.0",
+    "@react-spring/web": "^9.7.3",
     "clsx": "^1.2.1",
     "dayjs": "^1.11.9",
     "tailwind-merge": "^1.13.2"

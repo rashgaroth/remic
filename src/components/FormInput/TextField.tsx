@@ -66,7 +66,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
       if (success) {
         return 'border-green-500 text-green-500 placeholder-green-500 focus:ring-green-500 ring-green-500';
       }
-      return 'border-gray-300 text-gray-500 placeholder-gray-300 focus:ring-gray-500 ring-gray-300';
+      return 'border-gray-300 text-gray-700 placeholder-gray-300 focus:ring-gray-500 ring-gray-300';
     };
 
     const onFormatterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
