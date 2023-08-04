@@ -1,3 +1,3 @@
-import { AsyncTextFieldProps } from '../interfaces/component';
+import { DropdownInputProps } from '../interfaces/component';
 
-export function useDropdown(props: AsyncTextFieldProps) {}
+export function useDropdown(props: DropdownInputProps) {}

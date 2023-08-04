@@ -59,7 +59,7 @@ export type AsyncDropdownData = {
   value: any;
 };
 
-export type AsyncTextFieldProps = {
+export type DropdownInputProps = {
   onSearch?: (value: ChangeEvent<HTMLInputElement>) => void;
   loaderColor?: string;
   loading?: boolean;

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import TextField from './TextField';
-import { AsyncTextFieldProps } from '../../interfaces/component';
+import { DropdownInputProps } from '../../interfaces/component';
 import Loader from '../Loader';
 import {
   useSpring,
@@ -14,7 +14,7 @@ import clsxm from '../../utils/clsxm';
 import { safeFunction } from '../../utils/common';
 import Close from '../../svgs/Close';
 
-export default function AsyncTextField(props: AsyncTextFieldProps) {
+export default function DropdownInput(props: DropdownInputProps) {
   const {
     onSearch,
     loaderColor,
@@ -167,13 +167,14 @@ export default function AsyncTextField(props: AsyncTextFieldProps) {
         ref={dropdownDivRef}
         className={clsxm(
           'w-full mt-1 flex flex-col space-y-1 rounded-md z-50 shadow-lg relative overflow-hidden overflow-y-scroll',
-          'transition-all delay-150 duration-300 ease-in-out'
+          'transition-all delay-150 duration-300 ease-in-out',
+          'bg-white'
         )}
         style={{
           ...springRest,
           height,
           width: rest.width ?? 'auto',
-          maxHeight: 300,
+          maxHeight: 290,
         }}
       >
         {isFocus &&

@@ -1,6 +1,6 @@
 import Button from './Button';
 import Table from './Table';
 import TextField from './FormInput/TextField';
-import AsyncTextField from './FormInput/AsyncTextField';
+import DropdownInput from './FormInput/DropdownInput';
 
-export { Button, Table, TextField, AsyncTextField };
+export { Button, Table, TextField, DropdownInput };

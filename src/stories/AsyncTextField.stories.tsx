@@ -1,11 +1,11 @@
 import React from 'react';
 import { Meta, StoryFn } from '@storybook/react';
-import { AsyncTextField } from '..';
-import { AsyncTextFieldProps } from '../interfaces/component';
+import { DropdownInput } from '..';
+import { DropdownInputProps } from '../interfaces/component';
 
 const meta: Meta = {
-  title: 'Remic/AsyncTextField',
-  component: AsyncTextField,
+  title: 'Remic/DropdownInput',
+  component: DropdownInput,
   argTypes: {
     children: {
       control: {
@@ -81,7 +81,7 @@ const topFilms = [
   { label: 'Interstellar', value: 2014 },
 ];
 
-const AsyncTextFieldTemplate: StoryFn<AsyncTextFieldProps> = () => {
+const DropdownInputTemplate: StoryFn<DropdownInputProps> = () => {
   const [data, setData] = React.useState<Film[]>([]);
   const [loading, setLoading] = React.useState(false);
   const [selectedData, setSelectedData] = React.useState<Film | undefined>();
@@ -95,8 +95,8 @@ const AsyncTextFieldTemplate: StoryFn<AsyncTextFieldProps> = () => {
 
   return (
     <div className="flex flex-col space-y-2">
-      <p>Async textfield props</p>
-      <AsyncTextField
+      <p>Dropdown fields example</p>
+      <DropdownInput
         width={500}
         onOpen={() => {
           fetchTop100Films();
@@ -115,6 +115,6 @@ const AsyncTextFieldTemplate: StoryFn<AsyncTextFieldProps> = () => {
   );
 };
 
-export const Default = AsyncTextFieldTemplate.bind({});
+export const Default = DropdownInputTemplate.bind({});
 
 Default.args = {};
