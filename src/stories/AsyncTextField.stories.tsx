@@ -88,6 +88,7 @@ const DropdownInputTemplate: StoryFn<DropdownInputProps> = () => {
 
   const fetchTop100Films = async () => {
     setLoading(true);
+    setData([]);
     await sleep(1e3); // For demo purposes.
     setData(topFilms);
     setLoading(false);
@@ -95,22 +96,48 @@ const DropdownInputTemplate: StoryFn<DropdownInputProps> = () => {
 
   return (
     <div className="flex flex-col space-y-2">
-      <p>Dropdown fields example</p>
-      <DropdownInput
-        width={500}
-        onOpen={() => {
-          fetchTop100Films();
-        }}
-        initValue={topFilms[0]}
-        onChange={(value) => {
-          setSelectedData(value as Film);
-        }}
-        dropdownValue={selectedData}
-        data={data}
-        loading={loading}
-        label="Search people here"
-        placeholder="Search here ..."
-      />
+      <div className="grid grid-cols-3 gap-5">
+        <div>
+          <p>Async dropdown fields example</p>
+          <DropdownInput
+            onOpen={() => {
+              fetchTop100Films();
+            }}
+            initValue={topFilms[0]}
+            onChange={(value) => {
+              setSelectedData(value as Film);
+            }}
+            dropdownValue={selectedData}
+            data={data}
+            loading={loading}
+            label="Search people here"
+            placeholder="Search here ..."
+          />
+        </div>
+        <div>
+          <p>Static dropdown fields example</p>
+          <DropdownInput
+            dropdownValue={null}
+            disableType
+            data={[
+              {
+                label: 'User1',
+                value: 1,
+              },
+              {
+                label: 'User2',
+                value: 2,
+              },
+            ]}
+            label="Search people here"
+            placeholder="Search here ..."
+            textFieldProps={{
+              error: true,
+              errormsg: 'This is error message',
+            }}
+          />
+        </div>
+      </div>
     </div>
   );
 };

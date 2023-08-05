@@ -1,3 +1,4 @@
+import { ClassValue } from 'clsx';
 import {
   ButtonHTMLAttributes,
   ChangeEvent,
@@ -72,6 +73,13 @@ export type DropdownInputProps = {
       | React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => void;
   initValue?: AsyncDropdownData;
-  dropdownValue?: AsyncDropdownData;
+  dropdownValue?: AsyncDropdownData | null | undefined;
   CloseIcon?: ReactNode;
-} & TextFieldProps;
+  disableType?: boolean;
+  textFieldProps?: TextFieldProps;
+  label?: string;
+  placeholder?: string;
+  width?: number;
+  dropdownClassName?: ClassValue;
+  className?: ClassValue;
+};

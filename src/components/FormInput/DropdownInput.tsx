@@ -26,6 +26,7 @@ export default function DropdownInput(props: DropdownInputProps) {
     initValue,
     dropdownValue,
     CloseIcon,
+    disableType,
     ...rest
   } = props;
   const [isFocus, setIsFocus] = React.useState(false);
@@ -134,7 +135,6 @@ export default function DropdownInput(props: DropdownInputProps) {
   return (
     <div className="flex flex-col z-20">
       <TextField
-        {...rest}
         ref={textFieldRef}
         onFocus={(e) => {
           setListCurrentTarget(e.currentTarget);
@@ -144,6 +144,9 @@ export default function DropdownInput(props: DropdownInputProps) {
           setIsFocus(true);
         }}
         onChange={(e) => {
+          if (disableType && disableType === true) {
+            return;
+          }
           setCurrentValue(e.target.value);
           if (onSearch && safeFunction(onSearch)) {
             onSearch(e);
@@ -157,23 +160,27 @@ export default function DropdownInput(props: DropdownInputProps) {
             setIsFocus(false);
           }
         }}
-        className="px-5"
+        className={clsxm('px-5', rest.className && rest.className)}
         role="combobox"
         spellCheck={false}
         endIcon={getEndIcon()}
         value={currentValue}
+        placeholder={rest.placeholder ?? ''}
+        label={rest.label ?? ''}
+        {...rest.textFieldProps}
       />
       <animated.div
         ref={dropdownDivRef}
         className={clsxm(
           'w-full mt-1 flex flex-col space-y-1 rounded-md z-50 shadow-lg relative overflow-hidden overflow-y-scroll',
           'transition-all delay-150 duration-300 ease-in-out',
-          'bg-white'
+          'bg-white',
+          rest.dropdownClassName
         )}
         style={{
           ...springRest,
           height,
-          width: rest.width ?? 'auto',
+          width: 'auto',
           maxHeight: 290,
         }}
       >
@@ -183,6 +190,7 @@ export default function DropdownInput(props: DropdownInputProps) {
               ref={dropdownListRef}
               style={{ ...style }}
               onMouseDown={(e) => {
+                setCurrentValue(item.label);
                 setListCurrentTarget(e.currentTarget);
                 if (onChange && safeFunction(onChange)) {
                   onChange(item);
