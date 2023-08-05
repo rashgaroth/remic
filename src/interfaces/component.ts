@@ -3,6 +3,7 @@ import {
   ButtonHTMLAttributes,
   ChangeEvent,
   ComponentProps,
+  HTMLAttributes,
   InputHTMLAttributes,
   LabelHTMLAttributes,
   ReactNode,
@@ -82,4 +83,16 @@ export type DropdownInputProps = {
   width?: number;
   dropdownClassName?: ClassValue;
   className?: ClassValue;
-};
+} & InputHTMLAttributes<HTMLInputElement>;
+
+export type ChipProps = {
+  text?: string;
+  loading?: boolean;
+  color?: 'info' | 'success' | 'danger' | 'warning' | string
+  outlined?: boolean;
+  startIcon?: ReactNode;
+  endIcon?: ReactNode;
+  variant?: 'basic' | 'status';
+  clickable?: boolean;
+  handleClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
+} & HTMLAttributes<HTMLDivElement>
