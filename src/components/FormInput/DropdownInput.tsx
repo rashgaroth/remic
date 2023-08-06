@@ -44,18 +44,19 @@ export default function DropdownInput(props: DropdownInputProps) {
 
   const { height, ...springRest } = useSpring({
     ref: springApi,
-    config: config.slow,
+    config: config.gentle,
     from: {
       height: '0%',
+      opacity: 0,
     },
     to: {
       height: isFocus ? '100%' : '0%',
+      opacity: isFocus ? 1 : 0,
     },
   });
 
   const dropdownTransitionValues = useTransition(isFocus ? data : [], {
     ref: transApi,
-    trail: 400 / data.length,
     from: { opacity: 0 },
     enter: { opacity: 1 },
     leave: { opacity: 0 },
@@ -65,15 +66,6 @@ export default function DropdownInput(props: DropdownInputProps) {
     0,
     isFocus ? 0.1 : 0.6,
   ]);
-
-  React.useEffect(() => {
-    if (dropdownValue) {
-      if (!dropdownValue.label) {
-        throw new Error('Dropdown value must have label property');
-      }
-      setCurrentValue(dropdownValue.label);
-    }
-  }, [dropdownValue]);
 
   const getEndIcon = () => {
     if (loading) {
@@ -131,6 +123,15 @@ export default function DropdownInput(props: DropdownInputProps) {
     }
     return null;
   };
+
+  React.useEffect(() => {
+    if (dropdownValue) {
+      if (!dropdownValue.label) {
+        throw new Error('Dropdown value must have label property');
+      }
+      setCurrentValue(dropdownValue.label);
+    }
+  }, [dropdownValue]);
 
   return (
     <div className="flex flex-col z-20">

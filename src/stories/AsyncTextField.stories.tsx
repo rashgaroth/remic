@@ -98,12 +98,17 @@ const DropdownInputTemplate: StoryFn<DropdownInputProps> = () => {
     <div className="flex flex-col space-y-2">
       <div className="grid grid-cols-3 gap-5">
         <div>
-          <p>Async dropdown fields example</p>
+          <p>Async dropdown</p>
           <DropdownInput
             onOpen={() => {
               fetchTop100Films();
             }}
             initValue={topFilms[0]}
+            onSearch={(e) => {
+              setData(
+                topFilms.filter((item) => item.label.includes(e.target.value))
+              );
+            }}
             onChange={(value) => {
               setSelectedData(value as Film);
             }}
