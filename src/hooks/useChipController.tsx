@@ -1,9 +1,4 @@
-export function getChipColor(
-  color?: 'info' | 'success' | 'danger' | 'warning' | string,
-  outlined?: boolean,
-) {
-  console.log(color, outlined, 'getcolor');
-
+const useChipController = (color?: string, outlined?: boolean) => {
   switch (color) {
     case 'info': {
       return {
@@ -48,4 +43,6 @@ export function getChipColor(
       };
     }
   }
-}
+};
+
+export default useChipController;

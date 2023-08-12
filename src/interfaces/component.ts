@@ -214,3 +214,11 @@ export type PaginationProps = {
   boxClassName?: ClassValue;
   showCalculatedPage?: boolean;
 };
+
+export type ShineAnimationProps = {
+  isClicked: boolean;
+  color: {
+    accent: string;
+    className: string;
+  };
+}

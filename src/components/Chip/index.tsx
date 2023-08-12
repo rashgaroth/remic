@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import clsxm from '../../utils/clsxm';
-import { ChipProps } from '../../interfaces/component';
-import { getChipColor } from '../../utils/chip';
+import { ChipProps, ShineAnimationProps } from '../../interfaces/component';
+import useChipController from '../../hooks/useChipController';
 
 function Chip({
   text,
@@ -18,7 +18,7 @@ function Chip({
   const [isClicked, setIsClicked] = useState(false);
 
   const computedChipColor = useMemo(() => {
-    return getChipColor(color, outlined);
+    return useChipController(color, outlined);
   }, [color, outlined]);
 
   const clickHandler = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -62,16 +62,7 @@ function Chip({
   );
 }
 
-const ShineAnimation = ({
-  color,
-  isClicked,
-}: {
-  isClicked: boolean;
-  color: {
-    accent: string;
-    className: string;
-  };
-}) => {
+const ShineAnimation = ({ color, isClicked }: ShineAnimationProps) => {
   return (
     <div
       className={clsxm(
