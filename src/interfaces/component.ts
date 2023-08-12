@@ -1,8 +1,10 @@
+import { AnimatedComponent, AnimatedProps } from '@react-spring/web';
 import { ClassValue } from 'clsx';
-import {
+import React, {
   ButtonHTMLAttributes,
   ChangeEvent,
   ComponentProps,
+  HTMLAttributes,
   InputHTMLAttributes,
   LabelHTMLAttributes,
   ReactNode,
@@ -83,3 +85,20 @@ export type DropdownInputProps = {
   dropdownClassName?: ClassValue;
   className?: ClassValue;
 };
+
+export type ModalProps = {
+  open?: boolean;
+  theme?: "light" | 'dark';
+  headerTitle?: string;
+  disableAnimation?: boolean;
+  disableHeader?: boolean;
+  overrides?: {
+    backdropClassName?: ClassValue;
+    header?: {
+      className: ClassValue;
+      closeIcon?: React.ElementType;
+    };
+
+  };
+  close: () => void;
+} & AnimatedProps<AnimatedComponent<"aside">> & React.PropsWithChildren & HTMLAttributes<HTMLElement>;
