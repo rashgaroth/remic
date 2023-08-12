@@ -12,18 +12,18 @@ function RenderErrorIcon({
   success,
   successIcon,
 }: {
-  EndIcon?: React.ReactNode;
-  ErrorIcon?: React.ReactNode;
-  error?: boolean;
-  success?: boolean;
-  successIcon?: React.ReactNode;
-}): React.ReactNode {
+  EndIcon: React.ReactNode;
+  ErrorIcon: React.ReactNode;
+  error: boolean;
+  success: boolean;
+  successIcon: React.ReactNode;
+}): React.ReactElement | null {
   return EndIcon && !error ? (
-    EndIcon
+    <div>{EndIcon as React.ReactNode}</div>
   ) : success && successIcon ? (
-    successIcon
+    <div>{successIcon as React.ReactNode}</div>
   ) : ErrorIcon ? (
-    ErrorIcon
+    <div>{ErrorIcon as React.ReactNode}</div>
   ) : (
     <ExclamationCircleIcon
       className="h-5 w-5 text-red-500"
@@ -285,7 +285,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
                 EndIcon={endIcon}
                 error={tmpError}
                 ErrorIcon={errorIcon}
-                success={success}
+                success={success || false}
                 successIcon={successIcon}
               />
             ) : success && successIcon ? (
