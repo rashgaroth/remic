@@ -2,22 +2,37 @@ import * as React from 'react';
 import { CheckboxProps } from '../../interfaces/component';
 import { animated, useSpring } from '@react-spring/web';
 import clsxm from '../../utils/clsxm';
+import { safeVal } from '@remic/utils/common';
 
 function CheckedIcon({
   isChecked,
   className,
   disabled,
+  color,
 }: {
   isChecked: boolean;
   className?: string;
   disabled?: boolean;
+  color?: `#${string}`;
 }) {
   const [checkmarkLength, setCheckmarkLength] = React.useState<number | null>(
     null
   );
   const checkboxAnimationStyle = useSpring({
-    backgroundColor: isChecked ? (disabled ? '#d1d5db' : '#262626') : '#fff',
-    borderColor: isChecked ? (disabled ? '#d1d5db' : '#262626') : '#ddd',
+    backgroundColor: isChecked
+      ? disabled
+        ? '#d1d5db'
+        : safeVal(color)
+        ? color
+        : '#262626'
+      : '#fff',
+    borderColor: isChecked
+      ? disabled
+        ? '#d1d5db'
+        : safeVal(color)
+        ? color
+        : '#262626'
+      : '#ddd',
   });
   const checkmarkAnimationStyle = useSpring({
     x: isChecked ? 0 : checkmarkLength || 0,
@@ -80,6 +95,7 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(function (
         isChecked={isChecked}
         className={props.className}
         disabled={props.disabled}
+        color={props.color}
       />
       {props.label}
     </label>

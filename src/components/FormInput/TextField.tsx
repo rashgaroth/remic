@@ -1,9 +1,9 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import * as React from 'react';
 import { ExclamationCircleIcon } from '@heroicons/react/24/solid';
-import clsxm from '../../utils/clsxm';
-import { TextFieldProps } from '../../interfaces/component';
-import { safeFunction } from '../../utils/common';
+import clsxm from '@remic/utils/clsxm';
+import { TextFieldProps } from '@remic/interfaces/component';
+import { safeFunction } from '@remic/utils/common';
 
 function RenderErrorIcon({
   EndIcon,

@@ -89,18 +89,18 @@ export type DropdownInputProps = {
 export type ChipProps = {
   text?: string;
   loading?: boolean;
-  color?: 'info' | 'success' | 'danger' | 'warning' | string
+  color?: 'info' | 'success' | 'danger' | 'warning' | string;
   outlined?: boolean;
   startIcon?: ReactNode;
   endIcon?: ReactNode;
   variant?: 'basic' | 'status';
   clickable?: boolean;
-  handleClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
-} & HTMLAttributes<HTMLDivElement>
+  handleClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+} & HTMLAttributes<HTMLDivElement>;
 
 export type ModalProps = {
   open?: boolean;
-  theme?: "light" | 'dark';
+  theme?: 'light' | 'dark';
   headerTitle?: string;
   disableAnimation?: boolean;
   disableHeader?: boolean;
@@ -110,10 +110,11 @@ export type ModalProps = {
       className: ClassValue;
       closeIcon?: React.ElementType;
     };
-
   };
   close: () => void;
-} & AnimatedProps<AnimatedComponent<"aside">> & React.PropsWithChildren & HTMLAttributes<HTMLElement>;
+} & AnimatedProps<AnimatedComponent<'aside'>> &
+  React.PropsWithChildren &
+  HTMLAttributes<HTMLElement>;
 
 export type SortOptions = {
   onSort: (key: string) => void;
@@ -205,6 +206,7 @@ export type CheckboxProps = {
   id?: string;
   name?: string;
   disabled?: boolean;
+  color?: `#${string}`;
 };
 
 export type PaginationProps = {
@@ -216,9 +218,9 @@ export type PaginationProps = {
 };
 
 export type ShineAnimationProps = {
-  isClicked: boolean;
+  show: boolean;
   color: {
     accent: string;
     className: string;
   };
-}
+};

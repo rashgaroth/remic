@@ -1,7 +1,9 @@
+const TsConfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+
 module.exports = {
   stories: ['../src/stories/**/*.stories.@(ts|tsx|js|jsx)', '../src/stories/**/*.stories.mdx'],
   addons: [
-    '@storybook/addon-links', 
+    '@storybook/addon-links',
     '@storybook/addon-essentials',
     '@storybook/addon-interactions',
     {
@@ -23,5 +25,9 @@ module.exports = {
   },
   docs: {
     autodocs: true
+  },
+  webpackFinal: async (config) => {
+    config.resolve.plugins = [new TsConfigPathsPlugin()];
+    return config;
   }
 };

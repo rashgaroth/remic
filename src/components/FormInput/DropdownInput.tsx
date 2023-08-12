@@ -1,7 +1,6 @@
 import * as React from 'react';
-import TextField from './TextField';
-import { DropdownInputProps } from '../../interfaces/component';
-import Loader from '../Loader';
+import { TextField, Loader } from '@remic/components/index';
+import { DropdownInputProps } from '@remic/interfaces/component';
 import {
   useSpring,
   animated,
@@ -10,9 +9,9 @@ import {
   config,
   useChain,
 } from '@react-spring/web';
-import clsxm from '../../utils/clsxm';
-import { safeFunction } from '../../utils/common';
-import Close from '../../svgs/Close';
+import clsxm from '@remic/utils/clsxm';
+import { safeFunction } from '@remic/utils/common';
+import Close from '@remic/svgs/Close';
 
 export default function DropdownInput(props: DropdownInputProps) {
   const {

@@ -5,12 +5,12 @@ import {
   HeaderProps,
   TableDataProps,
   TableProps,
-} from '../../interfaces/component';
-import { isZeroArray, safeArray } from '../../utils/common';
-import clsxm from '../../utils/clsxm';
+} from '@remic/interfaces/component';
+import { isZeroArray, safeArray, safeVal } from '@remic/utils/common';
+import clsxm from '@remic/utils/clsxm';
 import { ClassValue } from 'clsx';
-import Checkbox from '../Checkbox';
-import Pagination from '../Pagination';
+import Checkbox from '@remic/components/Checkbox';
+import Pagination from '@remic/components/Pagination';
 
 function Td({
   alignment,
@@ -74,7 +74,7 @@ function Table(props: TableProps) {
   };
 
   const onCheck = (item: TableDataProps) => {
-    if (Object.hasOwn(item, 'defaultRemicChecked')) {
+    if (safeVal(item.defaultRemicChecked)) {
       item.defaultRemicChecked = !item.defaultRemicChecked;
     }
     onChecked && onChecked(item);
@@ -189,10 +189,10 @@ function Table(props: TableProps) {
                           onChecked && headerIndex === 0
                         );
                         const hasDefaultChecked = !!(
-                          Object.hasOwn(item, 'defaultRemicChecked') && onCheck
+                          safeVal(item.defaultRemicChecked) && onCheck
                         );
                         const hasCheckedDisabled = !!(
-                          Object.hasOwn(item, 'disabledChecked') && onCheck
+                          safeVal(item.disabledChecked) && onCheck
                         );
 
                         if (customRender) {

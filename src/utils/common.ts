@@ -6,3 +6,5 @@ export const safeArray = <T = any>(array: T[]): T[] =>
 
 export const isZeroArray = <T = any>(array: T[]): boolean =>
   Array.isArray(array) && array.length === 0;
+
+export const safeVal = (val: any): boolean => val !== undefined && val !== null;

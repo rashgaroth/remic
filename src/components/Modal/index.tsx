@@ -1,8 +1,8 @@
 import React from 'react';
 import { animated, useSpring } from '@react-spring/web';
-import { ModalProps } from '../../interfaces/component';
+import { ModalProps } from '@remic/interfaces/component';
 import { XMarkIcon } from '@heroicons/react/24/solid';
-import clsxm from '../../utils/clsxm';
+import clsxm from '@remic/utils/clsxm';
 
 const Modal = ({
   open,

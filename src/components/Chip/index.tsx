@@ -1,7 +1,8 @@
 import React, { useMemo, useState } from 'react';
-import clsxm from '../../utils/clsxm';
-import { ChipProps, ShineAnimationProps } from '../../interfaces/component';
-import useChipController from '../../hooks/useChipController';
+import clsxm from '@remic/utils/clsxm';
+import { ChipProps } from '@remic/interfaces/component';
+import useChipController from '@remic/hooks/useChipController';
+import ShineAnimation from '@remic/components/ShineAnimation';
 
 function Chip({
   text,
@@ -44,7 +45,7 @@ function Chip({
         rest.className
       )}
     >
-      <ShineAnimation isClicked={isClicked} color={computedChipColor} />
+      <ShineAnimation show={isClicked} color={computedChipColor} />
       {startIcon ? startIcon : null}
       {variant === 'status' && (
         <div
@@ -61,17 +62,5 @@ function Chip({
     </div>
   );
 }
-
-const ShineAnimation = ({ color, isClicked }: ShineAnimationProps) => {
-  return (
-    <div
-      className={clsxm(
-        color.accent,
-        'absolute z-10 w-14 h-14 rounded-full transition-all -translate-x-10',
-        isClicked ? 'translate-x-10 opacity-50 blur-lg' : 'opacity-0'
-      )}
-    ></div>
-  );
-};
 
 export default Chip;
