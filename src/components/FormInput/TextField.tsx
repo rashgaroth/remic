@@ -59,6 +59,14 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
     const [tmpErrMsg, setTmpErrMsg] = React.useState('');
     const [isFocus, setIsFocus] = React.useState(false);
 
+    const onError = formatter?.onError;
+    const rgx = formatter?.customRegex;
+    const numReg = rgx || /^[0-9]*(\.|,)?[0-9]*$/;
+    const separator = formatter?.separator || '-';
+    const decimalLimit = formatter?.decimalLimit || 4;
+    const execWhenChange = formatter?.execWhenChange;
+    const type = formatter?.type;
+
     const getClasses = (): React.ComponentProps<'label'>['className'] => {
       if (error || tmpError) {
         return 'border-red-300 text-red-500 placeholder-red-300 focus:ring-red-500 ring-red-300';
@@ -69,11 +77,55 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
       return 'border-gray-300 text-gray-700 placeholder-gray-300 focus:ring-gray-500 ring-gray-300';
     };
 
+    const formatPhoneNumber = (
+      value: string,
+      execOnChange: (customVal?: string) => void
+    ): string | undefined => {
+      if (execWhenChange && value !== '') {
+        if (!numReg.test(value[0])) {
+          return;
+        }
+      } else {
+        if (!numReg.test(value[0])) {
+          onError?.(value);
+          execOnChange();
+          return;
+        }
+      }
+      const regex = new RegExp(
+        new RegExp('(\\d)(?=(\\d{' + decimalLimit + '})+(?!\\d))', 'g')
+      );
+      const val = value
+        .replace(/[^0-9\.]/g, '')
+        .replace(/\.+$/, '')
+        .replace(regex, `$1${separator}`);
+
+      return val;
+    };
+
+    const formatMoney = (
+      value: string,
+      execOnChange: (customVal?: string) => void
+    ): string | undefined => {
+      const regex = /^[0-9]*(\.|,)?[0-9]*$/;
+      if (execWhenChange && value !== '') {
+        if (!regex.test(value[0])) {
+          return;
+        }
+      } else {
+        if (!regex.test(value[0])) {
+          onError?.(value);
+          execOnChange();
+          return;
+        }
+      }
+      let val = value.replace(/[^0-9\.]/g, '');
+      val = val.replace(/\.+$/, '').replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+      if (val.split('.').length > 2) val = val.replace(/\.+$/, '');
+      return val;
+    };
+
     const onFormatterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const type = formatter?.type;
-      const onError = formatter?.onError;
-      const rgx = formatter?.customRegex;
-      const execWhenChange = formatter?.execWhenChange;
       const value = e.target.value;
 
       const execOnChange = (customValue?: string) => {
@@ -93,7 +145,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
       };
 
       if (rgx) {
-        const regex = new RegExp(rgx);
+        const regex = rgx instanceof RegExp ? rgx : new RegExp(rgx);
         if (!regex.test(value)) {
           if (execWhenChange) {
             return onError?.(value);
@@ -103,21 +155,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
       }
 
       if (type === 'money') {
-        const regex = /^[0-9]*(\.|,)?[0-9]*$/;
-        if (execWhenChange && value !== '') {
-          if (!regex.test(value[0])) {
-            return;
-          }
-        } else {
-          if (!regex.test(value[0])) {
-            onError?.(value);
-            return execOnChange();
-          }
-        }
-        let val = value.replace(/[^0-9\.]/g, '');
-        val = val.replace(/\.+$/, '').replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-        if (val.split('.').length > 2) val = val.replace(/\.+$/, '');
-        return execOnChange(val);
+        return execOnChange(formatMoney(value, execOnChange) as string);
       }
 
       if (type === 'number') {
@@ -136,25 +174,11 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
       }
 
       if (type === 'phone') {
-        const regex = rgx || /^[0-9]*(\.|,)?[0-9]*$/;
-        const separator = formatter?.separator || '-';
-        const decimalLimit = formatter?.decimalLimit || 4;
-
-        if (execWhenChange && value !== '') {
-          if (!regex.test(value[0])) {
-            return;
-          }
-        } else {
-          if (!regex.test(value[0])) {
-            onError?.(value);
-            return execOnChange();
-          }
+        let val = value;
+        val = formatPhoneNumber(value, execOnChange) as string;
+        if (!val) {
+          return;
         }
-        let val = value.replace(/[^0-9\.]/g, '');
-        val = val
-          .replace(/\.+$/, '')
-          .replace(/(\d)(?=(\d{3})+(?!\d))/g, `$1${separator}`);
-        if (val.split('.').length > decimalLimit) val = val.replace(/\.+$/, '');
         return execOnChange(val);
       }
 

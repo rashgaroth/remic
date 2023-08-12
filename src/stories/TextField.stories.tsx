@@ -115,6 +115,7 @@ const TextFieldTemplate: StoryFn<any> = (args) => {
             onError: (value) => {
               console.log('onError?', value);
             },
+            decimalLimit: 4,
           }}
           fullWidth
           {...args}
