@@ -4,9 +4,20 @@ import clsxm from '../../utils/clsxm';
 import { ButtonProps } from '../../interfaces/component';
 import Loader from '../Loader';
 
-function Button({ loading, ...rest }: ButtonProps) {
+function Button(props: ButtonProps) {
+  const {
+    danger,
+    success,
+    outlined,
+    type,
+    className,
+    disabled,
+    loading,
+    ...rest
+  } = props;
   return (
     <button
+      {...rest}
       className={clsxm(
         `rounded-lg bg-opacity-25 hover:bg-opacity-40 
         shadow-md py-2 px-5 grid gap-1 grid-flow-col-dense
@@ -15,23 +26,22 @@ function Button({ loading, ...rest }: ButtonProps) {
         'disabled:bg-gray-400 disabled:text-gray-600 disabled:bg-opacity-60',
         'transition-all duration-300 hover:scale-105',
         'text-purple-800 hover:bg-purple-500 bg-purple-500',
-        rest.danger && 'bg-red-500 hover:bg-red-400 text-red-800',
-        rest.success && 'bg-green-500 hover:bg-green-400 text-green-800',
-        rest.outlined &&
+        danger && 'bg-red-500 hover:bg-red-400 text-red-800',
+        success && 'bg-green-500 hover:bg-green-400 text-green-800',
+        outlined &&
           'bg-transparent hover:bg-opacity-10 border-2 border-purple-500',
-        rest.outlined &&
-          rest.danger &&
+        outlined &&
+          danger &&
           'bg-transparent hover:bg-opacity-10 border-2 border-red-500',
-        rest.outlined &&
-          rest.success &&
+        outlined &&
+          success &&
           'bg-transparent hover:bg-opacity-10 border-2 border-green-500',
-        rest.outlined &&
-          rest.disabled &&
+        outlined &&
+          disabled &&
           'disabled:bg-gray-200 hover:bg-opacity-10 border-2 border-gray-500',
-        rest.className
+        className
       )}
-      type={rest.type ?? 'button'}
-      {...rest}
+      type={type ?? 'button'}
     >
       {loading && <Loader />}
       {rest.children}

@@ -1,93 +1,315 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
+'use client';
+
 import React from 'react';
-import Button from '../Button';
+import {
+  HeaderProps,
+  TableDataProps,
+  TableProps,
+} from '../../interfaces/component';
+import { isZeroArray, safeArray } from '../../utils/common';
+import clsxm from '../../utils/clsxm';
+import { ClassValue } from 'clsx';
+import Checkbox from '../Checkbox';
+import Pagination from '../Pagination';
 
-const people = [
-  {
-    name: 'Lindsay Walton',
-    title: 'Front-end Developer',
-    email: 'lindsay.walton@example.com',
-    role: 'Member',
-  },
-];
+function Td({
+  alignment,
+  tdProps,
+  children,
+  onClick,
+  className,
+}: {
+  alignment: HeaderProps['alignment'];
+  tdProps: HeaderProps['tdProps'];
+  children: React.ReactNode;
+  onClick?: (
+    event: React.MouseEvent<HTMLTableDataCellElement, MouseEvent>
+  ) => void;
+  className?: ClassValue;
+}) {
+  return (
+    <td
+      scope="col"
+      className={clsxm(
+        'px-3 py-4 text-sm font-normal text-gray-900',
+        `text-${alignment}`,
+        className
+      )}
+      onClick={onClick}
+      {...tdProps}
+    >
+      {children}
+    </td>
+  );
+}
 
-function Table() {
+function Table(props: TableProps) {
+  const {
+    tableProps = {},
+    tableBodyProps = {},
+    descriptionProps = {},
+    titleProps = {},
+    tableHeadProps = {},
+
+    headers,
+    title,
+    description,
+    data,
+    emptyMessage = 'No data available',
+    striped,
+
+    onRowClick,
+    onChecked,
+  } = props;
+  const [allChecked, setAllChecked] = React.useState(false);
+
+  const onTrClicked = (
+    item: TableDataProps,
+    ev: React.MouseEvent<HTMLTableDataCellElement, MouseEvent>
+  ) => {
+    ev.preventDefault();
+    if (onRowClick) {
+      return onRowClick(item, ev);
+    }
+  };
+
+  const onCheck = (item: TableDataProps) => {
+    if (Object.hasOwn(item, 'defaultRemicChecked')) {
+      item.defaultRemicChecked = !item.defaultRemicChecked;
+    }
+    onChecked && onChecked(item);
+  };
+
+  const onCheckAll = () => {
+    setAllChecked(!allChecked);
+    onChecked && onChecked((data && data) || []);
+  };
+
   return (
     <div className="px-4 sm:px-6 lg:px-8">
       <div className="sm:flex sm:items-center">
-        <div className="sm:flex-auto">
-          <h1 className="text-base font-semibold leading-6 text-gray-900">
-            Users
-          </h1>
-          <p className="mt-2 text-sm text-gray-700">
-            A list of all the users in your account including their name, title,
-            email and role.
-          </p>
-        </div>
-        <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-          <Button>
-            <p>Add User</p>
-          </Button>
+        <div className="sm:flex-auto mb-2">
+          {title &&
+            (typeof title === 'string' ? (
+              <h1
+                className="mx-0 text-base sm:-mx-6 lg:-mx-8 font-semibold leading-6 text-gray-900"
+                {...titleProps}
+              >
+                {title}
+              </h1>
+            ) : (
+              title
+            ))}
+          {description &&
+            (typeof description === 'string' ? (
+              <p
+                className="mt-0 mb-2 text-sm text-gray-700 mx-0 sm:-mx-6 lg:-mx-8"
+                {...descriptionProps}
+              >
+                {description}
+              </p>
+            ) : (
+              description
+            ))}
         </div>
       </div>
-      <div className="-mx-4 mt-8 sm:-mx-0">
-        <table className="min-w-full divide-y divide-gray-300">
-          <thead>
-            <tr>
-              <th
-                scope="col"
-                className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
-              >
-                Name
-              </th>
-              <th
-                scope="col"
-                className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 sm:table-cell"
-              >
-                Title
-              </th>
-              <th
-                scope="col"
-                className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell"
-              >
-                Email
-              </th>
-              <th
-                scope="col"
-                className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-              >
-                Role
-              </th>
-              <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-0">
-                <span className="sr-only">Edit</span>
-              </th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-200 bg-white">
-            {people.map((person) => (
-              <tr key={person.email}>
-                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
-                  {person.name}
-                </td>
-                <td className="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 sm:table-cell">
-                  {person.title}
-                </td>
-                <td className="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 lg:table-cell">
-                  {person.email}
-                </td>
-                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                  {person.role}
-                </td>
-                <td className="whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                  <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                    Edit
-                    <span className="sr-only">{person.name}</span>
-                  </a>
-                </td>
+      <div className="mx-0 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 bg-white rounded-lg shadow-xl">
+        <div className="inline-block min-w-full align-middle mx-0 sm:-mx-0">
+          <table className="min-w-full divide-gray-300" {...tableProps}>
+            <thead
+              {...tableHeadProps}
+              className={clsxm('bg-gray-200', tableHeadProps.className)}
+            >
+              <tr>
+                {safeArray<HeaderProps>(headers).map((header, index) => {
+                  const { alignment = 'left', thClassName = '' } = header;
+                  const key = `${header.key}-${index}`;
+                  const shouldRenderCheckbox = !!(onChecked && index === 0);
+
+                  const getAlignment = () => {
+                    switch (alignment) {
+                      case 'left':
+                        return 'text-left';
+                      case 'center':
+                        return 'text-center';
+                      case 'right':
+                        return 'text-right';
+                      default:
+                        return 'text-left';
+                    }
+                  };
+
+                  return (
+                    <th
+                      key={key}
+                      scope="col"
+                      className={clsxm(
+                        'px-3 py-3.5 text-sm font-semibold text-gray-900 sm:table-cell mb-2',
+                        getAlignment(),
+                        thClassName
+                      )}
+                      style={{
+                        width: header.width || 'auto',
+                      }}
+                      {...header.thProps}
+                    >
+                      {shouldRenderCheckbox ? (
+                        <div className="flex flex-row items-center space-x-2">
+                          <Checkbox onChange={onCheckAll} />
+                          <div>{header.label || ''}</div>
+                        </div>
+                      ) : (
+                        <div>{header.label || ''}</div>
+                      )}
+                    </th>
+                  );
+                })}
               </tr>
+            </thead>
+            <tbody
+              className={clsxm('divide-y divide-gray-300 bg-white')}
+              {...tableBodyProps}
+            >
+              {data &&
+                safeArray(data as TableDataProps[]).map((item, index) => {
+                  return (
+                    <tr
+                      key={index}
+                      className={clsxm(
+                        onRowClick && 'cursor-pointer hover:bg-gray-100',
+                        striped === 'even' && index % 2 === 0 && 'bg-gray-50',
+                        striped === 'odd' && index % 2 !== 0 && 'bg-gray-50',
+                        'z-0'
+                      )}
+                    >
+                      {headers.map((header, headerIndex) => {
+                        const { alignment = 'left', tdClassName = '' } = header;
+                        const customRender = header.renderData;
+                        const shouldRenderCheckbox = !!(
+                          onChecked && headerIndex === 0
+                        );
+                        const hasDefaultChecked = !!(
+                          Object.hasOwn(item, 'defaultRemicChecked') && onCheck
+                        );
+                        const hasCheckedDisabled = !!(
+                          Object.hasOwn(item, 'disabledChecked') && onCheck
+                        );
+
+                        if (customRender) {
+                          return (
+                            <Td
+                              alignment={alignment}
+                              tdProps={header.tdProps}
+                              key={headerIndex}
+                              onClick={
+                                shouldRenderCheckbox
+                                  ? undefined
+                                  : (ev) => onTrClicked(item, ev)
+                              }
+                              className={clsxm(
+                                headerIndex === 0 && 'rounded-l-xl',
+                                headerIndex === headers.length - 1 &&
+                                  'rounded-r-xl',
+                                'z-0',
+                                tdClassName
+                              )}
+                            >
+                              {shouldRenderCheckbox ? (
+                                <div className="relative flex flex-row items-center space-x-2 z-20">
+                                  <Checkbox
+                                    id={`checkbox-${headerIndex}-${header.key}`}
+                                    checked={
+                                      hasDefaultChecked
+                                        ? item.defaultRemicChecked
+                                        : allChecked
+                                    }
+                                    disabled={
+                                      hasCheckedDisabled
+                                        ? item.disabledChecked
+                                        : false
+                                    }
+                                    className="absolute z-50 inset-0"
+                                    onChange={() => onCheck(item)}
+                                  />
+                                  <div className="pl-7">
+                                    {customRender(item?.[header.key] || '')}
+                                  </div>
+                                </div>
+                              ) : (
+                                customRender(item?.[header.key] || '')
+                              )}
+                            </Td>
+                          );
+                        }
+                        return (
+                          <Td
+                            alignment={alignment}
+                            tdProps={header.tdProps}
+                            key={headerIndex}
+                            onClick={
+                              shouldRenderCheckbox
+                                ? undefined
+                                : (ev) => onTrClicked(item, ev)
+                            }
+                            className={clsxm(
+                              headerIndex === 0 && 'rounded-l-xl',
+                              headerIndex === headers.length - 1 &&
+                                'rounded-r-xl',
+                              'z-0',
+                              tdClassName
+                            )}
+                          >
+                            {shouldRenderCheckbox ? (
+                              <div className="relative flex flex-row items-center space-x-2 z-20">
+                                <Checkbox
+                                  checked={
+                                    hasDefaultChecked
+                                      ? item.defaultRemicChecked
+                                      : allChecked
+                                  }
+                                  id={`checkbox-${headerIndex}-${header.key}`}
+                                  disabled={
+                                    hasCheckedDisabled
+                                      ? item.disabledChecked
+                                      : false
+                                  }
+                                  className="absolute z-50 inset-0"
+                                  onChange={() => onCheck(item)}
+                                />
+                                <div className="pl-7">
+                                  {item?.[header.key] || ''}
+                                </div>
+                              </div>
+                            ) : (
+                              item?.[header.key] || ''
+                            )}
+                          </Td>
+                        );
+                      })}
+                    </tr>
+                  );
+                })}
+            </tbody>
+          </table>
+          {!data ||
+            (isZeroArray(data) && (
+              <div className="flex w-full items-center justify-center mt-5">
+                {typeof emptyMessage === 'string' ? (
+                  <p className="text-sm">{emptyMessage}</p>
+                ) : (
+                  emptyMessage
+                )}
+              </div>
             ))}
-          </tbody>
-        </table>
+          <div className="w-full flex flex-row justify-end px-2 py-2">
+            <Pagination
+              totalPage={6}
+              onPageChange={(page) => {
+                console.log(page, '@page?');
+              }}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
