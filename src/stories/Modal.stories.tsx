@@ -41,7 +41,6 @@ const ModalTemplate: StoryFn<ModalProps> = (args) => {
             {...args}
             open={modalOpen[0]}
             headerTitle="Header Title Example"
-            theme="light"
             close={() => setModalOpen((prev) => [!prev[0], prev[1], prev[2]])}
           >
             <p className="text-sm">
