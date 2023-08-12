@@ -12,11 +12,11 @@ function RenderErrorIcon({
   success,
   successIcon,
 }: {
-  EndIcon: React.ReactNode;
-  ErrorIcon: React.ReactNode;
-  error: boolean;
-  success: boolean;
-  successIcon: React.ReactNode;
+  EndIcon: React.ReactNode
+  ErrorIcon: React.ReactNode
+  error: boolean
+  success: boolean
+  successIcon: React.ReactNode
 }): React.ReactElement | null {
   return EndIcon && !error ? (
     <div>{EndIcon as React.ReactNode}</div>

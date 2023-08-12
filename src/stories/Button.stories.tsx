@@ -1,15 +1,15 @@
-import React from 'react';
-import { Meta, StoryFn } from '@storybook/react';
-import { Button } from '..';
-import { ButtonProps } from '../interfaces/component';
+import React from "react";
+import { Meta, StoryFn } from "@storybook/react";
+import { Button } from "..";
+import { ButtonProps } from "../interfaces/component";
 
 const meta: Meta = {
-  title: 'Remic/Buttons',
+  title: "Remic/Buttons",
   component: Button,
   argTypes: {
     children: {
       control: {
-        type: 'text',
+        type: "text",
       },
     },
   },

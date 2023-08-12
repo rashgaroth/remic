@@ -1,16 +1,16 @@
-import React from 'react';
-import { Chip } from '..';
-import { ChipProps } from '../interfaces/component';
-import { Meta, StoryFn } from '@storybook/react';
-import { InformationCircleIcon, XCircleIcon } from '@heroicons/react/24/solid';
+import React from "react";
+import { Chip } from "..";
+import { ChipProps } from "../interfaces/component";
+import { Meta, StoryFn } from "@storybook/react";
+import { InformationCircleIcon, XCircleIcon } from "@heroicons/react/24/solid";
 
 const meta: Meta = {
-  title: 'Remic/Chip',
+  title: "Remic/Chip",
   component: Chip,
   argTypes: {
     children: {
       control: {
-        type: 'text',
+        type: "text",
       },
     },
   },
@@ -61,13 +61,13 @@ const ChipTemplate: StoryFn<ChipProps> = () => (
         <Chip
           clickable
           text="Click Me"
-          handleClick={() => console.log('Clicked')}
+          handleClick={() => console.log("Clicked")}
         />
         <Chip
           clickable
           text="Click Me"
           color="info"
-          handleClick={() => console.log('Clicked')}
+          handleClick={() => console.log("Clicked")}
         />
       </div>
     </div>

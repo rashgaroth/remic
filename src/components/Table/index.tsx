@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import React from 'react';
+import React from "react";
 import {
   HeaderProps,
   TableDataProps,
   TableProps,
-} from '@remic/interfaces/component';
-import { isZeroArray, safeArray, safeVal } from '@remic/utils/common';
-import clsxm from '@remic/utils/clsxm';
-import { ClassValue } from 'clsx';
-import Checkbox from '@remic/components/Checkbox';
-import Pagination from '@remic/components/Pagination';
+} from "@remic/interfaces/component";
+import { isZeroArray, safeArray, safeVal } from "@remic/utils/common";
+import clsxm from "@remic/utils/clsxm";
+import { ClassValue } from "clsx";
+import Checkbox from "@remic/components/Checkbox";
+import Pagination from "@remic/components/Pagination";
 
 function Td({
   alignment,
@@ -19,8 +19,8 @@ function Td({
   onClick,
   className,
 }: {
-  alignment: HeaderProps['alignment'];
-  tdProps: HeaderProps['tdProps'];
+  alignment: HeaderProps["alignment"];
+  tdProps: HeaderProps["tdProps"];
   children: React.ReactNode;
   onClick?: (
     event: React.MouseEvent<HTMLTableDataCellElement, MouseEvent>
@@ -29,9 +29,8 @@ function Td({
 }) {
   return (
     <td
-      scope="col"
       className={clsxm(
-        'px-3 py-4 text-sm font-normal text-gray-900',
+        "px-3 py-4 text-sm font-normal text-gray-900",
         `text-${alignment}`,
         className
       )}
@@ -55,7 +54,7 @@ function Table(props: TableProps) {
     title,
     description,
     data,
-    emptyMessage = 'No data available',
+    emptyMessage = "No data available",
     striped,
 
     onRowClick,
@@ -90,7 +89,7 @@ function Table(props: TableProps) {
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto mb-2">
           {title &&
-            (typeof title === 'string' ? (
+            (typeof title === "string" ? (
               <h1
                 className="mx-0 text-base sm:-mx-6 lg:-mx-8 font-semibold leading-6 text-gray-900"
                 {...titleProps}
@@ -101,7 +100,7 @@ function Table(props: TableProps) {
               title
             ))}
           {description &&
-            (typeof description === 'string' ? (
+            (typeof description === "string" ? (
               <p
                 className="mt-0 mb-2 text-sm text-gray-700 mx-0 sm:-mx-6 lg:-mx-8"
                 {...descriptionProps}
@@ -118,24 +117,24 @@ function Table(props: TableProps) {
           <table className="min-w-full divide-gray-300" {...tableProps}>
             <thead
               {...tableHeadProps}
-              className={clsxm('bg-gray-200', tableHeadProps.className)}
+              className={clsxm("bg-gray-200", tableHeadProps.className)}
             >
               <tr>
                 {safeArray<HeaderProps>(headers).map((header, index) => {
-                  const { alignment = 'left', thClassName = '' } = header;
+                  const { alignment = "left", thClassName = "" } = header;
                   const key = `${header.key}-${index}`;
                   const shouldRenderCheckbox = !!(onChecked && index === 0);
 
                   const getAlignment = () => {
                     switch (alignment) {
-                      case 'left':
-                        return 'text-left';
-                      case 'center':
-                        return 'text-center';
-                      case 'right':
-                        return 'text-right';
+                      case "left":
+                        return "text-left";
+                      case "center":
+                        return "text-center";
+                      case "right":
+                        return "text-right";
                       default:
-                        return 'text-left';
+                        return "text-left";
                     }
                   };
 
@@ -144,22 +143,22 @@ function Table(props: TableProps) {
                       key={key}
                       scope="col"
                       className={clsxm(
-                        'px-3 py-3.5 text-sm font-semibold text-gray-900 sm:table-cell mb-2',
+                        "px-3 py-3.5 text-sm font-semibold text-gray-900 sm:table-cell mb-2",
                         getAlignment(),
                         thClassName
                       )}
                       style={{
-                        width: header.width || 'auto',
+                        width: header.width || "auto",
                       }}
                       {...header.thProps}
                     >
                       {shouldRenderCheckbox ? (
                         <div className="flex flex-row items-center space-x-2">
                           <Checkbox onChange={onCheckAll} />
-                          <div>{header.label || ''}</div>
+                          <div>{header.label || ""}</div>
                         </div>
                       ) : (
-                        <div>{header.label || ''}</div>
+                        <div>{header.label || ""}</div>
                       )}
                     </th>
                   );
@@ -167,7 +166,7 @@ function Table(props: TableProps) {
               </tr>
             </thead>
             <tbody
-              className={clsxm('divide-y divide-gray-300 bg-white')}
+              className={clsxm("divide-y divide-gray-300 bg-white")}
               {...tableBodyProps}
             >
               {data &&
@@ -176,14 +175,14 @@ function Table(props: TableProps) {
                     <tr
                       key={index}
                       className={clsxm(
-                        onRowClick && 'cursor-pointer hover:bg-gray-100',
-                        striped === 'even' && index % 2 === 0 && 'bg-gray-50',
-                        striped === 'odd' && index % 2 !== 0 && 'bg-gray-50',
-                        'z-0'
+                        onRowClick && "cursor-pointer hover:bg-gray-100",
+                        striped === "even" && index % 2 === 0 && "bg-gray-50",
+                        striped === "odd" && index % 2 !== 0 && "bg-gray-50",
+                        "z-0"
                       )}
                     >
                       {headers.map((header, headerIndex) => {
-                        const { alignment = 'left', tdClassName = '' } = header;
+                        const { alignment = "left", tdClassName = "" } = header;
                         const customRender = header.renderData;
                         const shouldRenderCheckbox = !!(
                           onChecked && headerIndex === 0
@@ -207,10 +206,10 @@ function Table(props: TableProps) {
                                   : (ev) => onTrClicked(item, ev)
                               }
                               className={clsxm(
-                                headerIndex === 0 && 'rounded-l-xl',
+                                headerIndex === 0 && "rounded-l-xl",
                                 headerIndex === headers.length - 1 &&
-                                  'rounded-r-xl',
-                                'z-0',
+                                  "rounded-r-xl",
+                                "z-0",
                                 tdClassName
                               )}
                             >
@@ -232,11 +231,11 @@ function Table(props: TableProps) {
                                     onChange={() => onCheck(item)}
                                   />
                                   <div className="pl-7">
-                                    {customRender(item?.[header.key] || '')}
+                                    {customRender(item?.[header.key] || "")}
                                   </div>
                                 </div>
                               ) : (
-                                customRender(item?.[header.key] || '')
+                                customRender(item?.[header.key] || "")
                               )}
                             </Td>
                           );
@@ -252,10 +251,10 @@ function Table(props: TableProps) {
                                 : (ev) => onTrClicked(item, ev)
                             }
                             className={clsxm(
-                              headerIndex === 0 && 'rounded-l-xl',
+                              headerIndex === 0 && "rounded-l-xl",
                               headerIndex === headers.length - 1 &&
-                                'rounded-r-xl',
-                              'z-0',
+                                "rounded-r-xl",
+                              "z-0",
                               tdClassName
                             )}
                           >
@@ -277,11 +276,11 @@ function Table(props: TableProps) {
                                   onChange={() => onCheck(item)}
                                 />
                                 <div className="pl-7">
-                                  {item?.[header.key] || ''}
+                                  {item?.[header.key] || ""}
                                 </div>
                               </div>
                             ) : (
-                              item?.[header.key] || ''
+                              item?.[header.key] || ""
                             )}
                           </Td>
                         );
@@ -294,7 +293,7 @@ function Table(props: TableProps) {
           {!data ||
             (isZeroArray(data) && (
               <div className="flex w-full items-center justify-center mt-5">
-                {typeof emptyMessage === 'string' ? (
+                {typeof emptyMessage === "string" ? (
                   <p className="text-sm">{emptyMessage}</p>
                 ) : (
                   emptyMessage
@@ -305,7 +304,7 @@ function Table(props: TableProps) {
             <Pagination
               totalPage={6}
               onPageChange={(page) => {
-                console.log(page, '@page?');
+                console.log(page, "@page?");
               }}
             />
           </div>

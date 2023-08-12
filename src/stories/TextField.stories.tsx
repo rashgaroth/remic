@@ -1,19 +1,18 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState } from 'react';
-import { Meta, StoryFn } from '@storybook/react';
-import TextField from '../components/FormInput/TextField';
+import React, { useState } from "react";
+import { Meta, StoryFn } from "@storybook/react";
+import TextField from "../components/FormInput/TextField";
 import {
   CheckBadgeIcon,
   PresentationChartBarIcon,
-} from '@heroicons/react/24/solid';
+} from "@heroicons/react/24/solid";
 
 const meta: Meta = {
-  title: 'Remic/TextField',
+  title: "Remic/TextField",
   component: TextField,
   argTypes: {
     children: {
       control: {
-        type: 'text',
+        type: "text",
       },
     },
   },
@@ -25,10 +24,10 @@ const meta: Meta = {
 export default meta;
 
 const TextFieldTemplate: StoryFn<any> = (args) => {
-  const [text, setMoney] = useState('');
-  const [numText, setNumber] = useState('');
-  const [phone, setPhone] = useState('');
-  const [ruleText, setRuleText] = useState('');
+  const [text, setMoney] = useState("");
+  const [numText, setNumber] = useState("");
+  const [phone, setPhone] = useState("");
+  const [ruleText, setRuleText] = useState("");
 
   return (
     <div className="flex flex-col space-y-2">
@@ -77,12 +76,12 @@ const TextFieldTemplate: StoryFn<any> = (args) => {
           onChange={(e) => setMoney(e.target.value)}
           value={text}
           formatter={{
-            type: 'money',
+            type: "money",
             execWhenChange: true,
             onError: (value) => {
-              console.log('onError?', value);
+              console.log("onError?", value);
             },
-            currencySymbol: 'Rp.',
+            currencySymbol: "Rp.",
           }}
           fullWidth
           {...args}
@@ -94,10 +93,10 @@ const TextFieldTemplate: StoryFn<any> = (args) => {
           onChange={(e) => setNumber(e.target.value)}
           value={numText}
           formatter={{
-            type: 'number',
+            type: "number",
             execWhenChange: true,
             onError: (value) => {
-              console.log('onError?', value);
+              console.log("onError?", value);
             },
           }}
           fullWidth
@@ -110,10 +109,10 @@ const TextFieldTemplate: StoryFn<any> = (args) => {
           onChange={(e) => setPhone(e.target.value)}
           value={phone}
           formatter={{
-            type: 'phone',
+            type: "phone",
             execWhenChange: true,
             onError: (value) => {
-              console.log('onError?', value);
+              console.log("onError?", value);
             },
             decimalLimit: 4,
           }}
@@ -132,11 +131,11 @@ const TextFieldTemplate: StoryFn<any> = (args) => {
             minValue: 5,
             onError(value) {
               const val =
-                value === 'required'
-                  ? 'This field is required'
-                  : value === 'min'
-                  ? 'This field must be greater than 5'
-                  : 'This field must be less than 10';
+                value === "required"
+                  ? "This field is required"
+                  : value === "min"
+                  ? "This field must be greater than 5"
+                  : "This field must be less than 10";
               return val;
             },
           }}

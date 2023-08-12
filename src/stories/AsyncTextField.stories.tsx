@@ -27,9 +27,9 @@ function sleep(delay = 0) {
 }
 
 type Film = {
-  label: string;
-  value: number;
-};
+  label: string
+  value: number
+}
 
 const topFilms = [
   { label: 'The Shawshank Redemption', value: 1994 },

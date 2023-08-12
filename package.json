@@ -19,7 +19,8 @@
     "analyze": "size-limit --why",
     "sb": "npx storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "lint": "eslint ."
+    "lint": "eslint '**/*.{ts,tsx}'",
+    "lint:fix": "eslint '**/*.{ts,tsx}' --fix"
   },
   "peerDependencies": {
     "react": ">=16"
@@ -28,12 +29,6 @@
     "hooks": {
       "pre-commit": "tsdx lint"
     }
-  },
-  "prettier": {
-    "printWidth": 80,
-    "semi": true,
-    "singleQuote": true,
-    "trailingComma": "es5"
   },
   "name": "@remic/core",
   "author": "rashgaroth",
@@ -76,11 +71,12 @@
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-jsx-a11y": "^6.7.1",
-    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-prettier": "5.0.0",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "husky": "^8.0.3",
     "postcss": "^8.4.26",
+    "prettier": "^3.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-is": "^18.2.0",

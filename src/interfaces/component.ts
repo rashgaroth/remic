@@ -1,5 +1,5 @@
-import { AnimatedComponent, AnimatedProps } from '@react-spring/web';
-import { ClassValue } from 'clsx';
+import { AnimatedComponent, AnimatedProps } from "@react-spring/web";
+import { ClassValue } from "clsx";
 import React, {
   ButtonHTMLAttributes,
   ChangeEvent,
@@ -8,7 +8,7 @@ import React, {
   InputHTMLAttributes,
   LabelHTMLAttributes,
   ReactNode,
-} from 'react';
+} from "react";
 
 export type ButtonProps = {
   loading?: boolean;
@@ -18,7 +18,7 @@ export type ButtonProps = {
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
 export type FormatterInput = {
-  type: 'money' | 'phone' | 'number';
+  type: "money" | "phone" | "number";
   customRegex?: RegExp;
   execWhenChange?: boolean;
   onError?: (value: string) => void;
@@ -31,7 +31,7 @@ export type Rules = {
   maxValue?: number;
   minValue?: number;
   required?: boolean;
-  onError?: (value: 'max' | 'required' | 'min') => string;
+  onError?: (value: "max" | "required" | "min") => string;
 };
 
 export type TextFieldProps<T = HTMLInputElement> = {
@@ -54,7 +54,7 @@ export type TextFieldProps<T = HTMLInputElement> = {
   // label
   labelProps?: LabelHTMLAttributes<HTMLLabelElement>;
   LabelComponent?: ReactNode;
-  labelClassName?: ComponentProps<'label'>['className'];
+  labelClassName?: ComponentProps<"label">["className"];
 } & InputHTMLAttributes<T>;
 
 export type AsyncDropdownData = {
@@ -89,18 +89,18 @@ export type DropdownInputProps = {
 export type ChipProps = {
   text?: string;
   loading?: boolean;
-  color?: 'info' | 'success' | 'danger' | 'warning' | string;
+  color?: "info" | "success" | "danger" | "warning" | string;
   outlined?: boolean;
   startIcon?: ReactNode;
   endIcon?: ReactNode;
-  variant?: 'basic' | 'status';
+  variant?: "basic" | "status";
   clickable?: boolean;
   handleClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 } & HTMLAttributes<HTMLDivElement>;
 
 export type ModalProps = {
   open?: boolean;
-  theme?: 'light' | 'dark';
+  theme?: "light" | "dark";
   headerTitle?: string;
   disableAnimation?: boolean;
   disableHeader?: boolean;
@@ -112,13 +112,13 @@ export type ModalProps = {
     };
   };
   close: () => void;
-} & AnimatedProps<AnimatedComponent<'aside'>> &
+} & AnimatedProps<AnimatedComponent<"aside">> &
   React.PropsWithChildren &
   HTMLAttributes<HTMLElement>;
 
 export type SortOptions = {
   onSort: (key: string) => void;
-  order: 'ASC' | 'DESC';
+  order: "ASC" | "DESC";
   icon?: ReactNode;
   showDefault?: boolean;
 };
@@ -127,7 +127,7 @@ export type HeaderProps = {
   label: string | ReactNode;
   key: string;
   icon?: ReactNode;
-  alignment?: 'left' | 'right' | 'center';
+  alignment?: "left" | "right" | "center";
   sort?: SortOptions;
   width?: number;
 
@@ -159,7 +159,7 @@ export type TableProps = {
   usePagination?: boolean;
   title?: string | ReactNode;
   description?: string;
-  striped?: 'even' | 'odd';
+  striped?: "even" | "odd";
 
   titleProps?: React.DetailedHTMLProps<
     React.HTMLAttributes<HTMLHeadingElement>,

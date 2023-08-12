@@ -1,8 +1,8 @@
-import React from 'react';
-import { animated, useSpring } from '@react-spring/web';
-import { ModalProps } from '@remic/interfaces/component';
-import { XMarkIcon } from '@heroicons/react/24/solid';
-import clsxm from '@remic/utils/clsxm';
+import React from "react";
+import { animated, useSpring } from "@react-spring/web";
+import { ModalProps } from "@remic/interfaces/component";
+import { XMarkIcon } from "@heroicons/react/24/solid";
+import clsxm from "@remic/utils/clsxm";
 
 const Modal = ({
   open,
@@ -11,13 +11,13 @@ const Modal = ({
   overrides,
   disableHeader = false,
   disableAnimation = false,
-  theme = 'dark',
+  theme = "dark",
   ...props
 }: ModalProps) => {
   const backdropAnimation = useSpring({
     opacity: open ? 1 : 0,
     scale: open ? 1.1 : 1.1,
-    backdropFilter: open ? 'blur(0.5rem)' : 'blur(0rem)',
+    backdropFilter: open ? "blur(0.5rem)" : "blur(0rem)",
   });
 
   const modalAnimation = useSpring({
@@ -28,8 +28,8 @@ const Modal = ({
   return (
     <animated.div
       className={clsxm(
-        'w-screen h-screen flex items-center justify-center fixed top-0 left-0 bg-black/60 px-2 md:px-0',
-        !open ? '-z-50' : 'z-[9990]',
+        "w-screen h-screen flex items-center justify-center fixed top-0 left-0 bg-black/60 px-2 md:px-0",
+        !open ? "-z-50" : "z-[9990]",
         overrides?.backdropClassName
       )}
       onClick={() => {
@@ -43,19 +43,19 @@ const Modal = ({
         {...props}
         style={{ ...modalAnimation, ...props.style }}
         className={clsxm(
-          'w-full max-w-lg rounded-xl shadow-md overflow-x-hidden relative z-[9999] -mt-8',
-          theme === 'dark'
-            ? 'bg-[#252a30] text-gray-100'
-            : 'bg-[#dedfe2] text-slate-900'
+          "w-full max-w-lg rounded-xl shadow-md overflow-x-hidden relative z-[9999] -mt-8",
+          theme === "dark"
+            ? "bg-[#252a30] text-gray-100"
+            : "bg-[#dedfe2] text-slate-900"
         )}
       >
         {!disableHeader && (
           <header
             className={clsxm(
-              'w-full px-1.5 py-1.5 rounded-t-xl shadow-md mb-2 flex justify-between items-center',
-              theme === 'dark'
-                ? 'bg-[#34363d]'
-                : 'bg-[#f6f8fa] shadow-gray-300',
+              "w-full px-1.5 py-1.5 rounded-t-xl shadow-md mb-2 flex justify-between items-center",
+              theme === "dark"
+                ? "bg-[#34363d]"
+                : "bg-[#f6f8fa] shadow-gray-300",
               overrides?.header?.className
             )}
           >
@@ -75,14 +75,14 @@ const Modal = ({
         )}
         <section
           className={clsxm(
-            'p-4 py-2 relative overflow-x-hidden max-h-[600px]',
-            disableHeader && 'mt-4 py-0',
+            "p-4 py-2 relative overflow-x-hidden max-h-[600px]",
+            disableHeader && "mt-4 py-0",
             props.className
           )}
         >
           {props.children}
         </section>
-        <div className={clsxm(!disableHeader ? 'mt-2' : 'mt-4')}></div>
+        <div className={clsxm(!disableHeader ? "mt-2" : "mt-4")}></div>
       </animated.aside>
     </animated.div>
   );

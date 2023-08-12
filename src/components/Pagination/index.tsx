@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
-import { PaginationProps } from '@remic/interfaces/component';
-import clsxm from '@remic/utils/clsxm';
+import React, { useEffect } from "react";
+import { PaginationProps } from "@remic/interfaces/component";
+import clsxm from "@remic/utils/clsxm";
 
 export default function Pagination(props: PaginationProps) {
   const {
     totalPage,
-    className = '',
-    boxClassName = '',
+    className = "",
+    boxClassName = "",
     showCalculatedPage,
     onPageChange,
   } = props;
@@ -31,7 +31,7 @@ export default function Pagination(props: PaginationProps) {
   React.useEffect(() => {
     if (
       onPageChange &&
-      typeof onPageChange === 'function' &&
+      typeof onPageChange === "function" &&
       currentPage !== 0
     ) {
       onPageChange(currentPage);
@@ -76,7 +76,7 @@ export default function Pagination(props: PaginationProps) {
           page {currentPage} of {totalPage}
         </p>
       )}
-      <div className={clsxm('flex flex-row space-x-2', className)}>
+      <div className={clsxm("flex flex-row space-x-2", className)}>
         {(replacerPosition === 1 || replacerPosition === 3) && (
           <div
             onClick={() => {
@@ -85,8 +85,8 @@ export default function Pagination(props: PaginationProps) {
               setPageNumber(1);
             }}
             className={clsxm(
-              'w-8 h-8 border-gray-200 border rounded-md cursor-pointer hover:bg-gray-100 flex items-center justify-center',
-              currentPage === 0 && 'bg-gray-200 text-gray-900',
+              "w-8 h-8 border-gray-200 border rounded-md cursor-pointer hover:bg-gray-100 flex items-center justify-center",
+              currentPage === 0 && "bg-gray-200 text-gray-900",
               boxClassName
             )}
           >
@@ -96,7 +96,7 @@ export default function Pagination(props: PaginationProps) {
         {(replacerPosition === 1 || replacerPosition === 3) && (
           <div
             className={clsxm(
-              'w-8 h-8 border-gray-200 border rounded-md cursor-pointer hover:bg-gray-100 flex items-center justify-center',
+              "w-8 h-8 border-gray-200 border rounded-md cursor-pointer hover:bg-gray-100 flex items-center justify-center",
               boxClassName
             )}
           >
@@ -124,8 +124,8 @@ export default function Pagination(props: PaginationProps) {
                   setCurrentPage(pageNum);
                 }}
                 className={clsxm(
-                  'w-8 h-8 border-gray-200 border rounded-md cursor-pointer hover:bg-gray-100 flex items-center justify-center',
-                  active && 'bg-gray-200 text-gray-900',
+                  "w-8 h-8 border-gray-200 border rounded-md cursor-pointer hover:bg-gray-100 flex items-center justify-center",
+                  active && "bg-gray-200 text-gray-900",
                   boxClassName
                 )}
               >
@@ -136,7 +136,7 @@ export default function Pagination(props: PaginationProps) {
         {(replacerPosition === 0 || replacerPosition === 3) && (
           <div
             className={clsxm(
-              'w-8 h-8 border-gray-200 border rounded-md cursor-pointer hover:bg-gray-100 flex items-center justify-center',
+              "w-8 h-8 border-gray-200 border rounded-md cursor-pointer hover:bg-gray-100 flex items-center justify-center",
               boxClassName
             )}
           >
@@ -151,8 +151,8 @@ export default function Pagination(props: PaginationProps) {
               setPageNumber(totalPage);
             }}
             className={clsxm(
-              'w-8 h-8 border-gray-200 border rounded-md cursor-pointer hover:bg-gray-100 flex items-center justify-center',
-              currentPage === totalPage && 'bg-gray-200 text-gray-900',
+              "w-8 h-8 border-gray-200 border rounded-md cursor-pointer hover:bg-gray-100 flex items-center justify-center",
+              currentPage === totalPage && "bg-gray-200 text-gray-900",
               boxClassName
             )}
           >

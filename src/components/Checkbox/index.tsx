@@ -1,8 +1,8 @@
-import * as React from 'react';
-import { CheckboxProps } from '../../interfaces/component';
-import { animated, useSpring } from '@react-spring/web';
-import clsxm from '../../utils/clsxm';
-import { safeVal } from '@remic/utils/common';
+import * as React from "react";
+import { CheckboxProps } from "../../interfaces/component";
+import { animated, useSpring } from "@react-spring/web";
+import clsxm from "../../utils/clsxm";
+import { safeVal } from "@remic/utils/common";
 
 function CheckedIcon({
   isChecked,
@@ -21,18 +21,18 @@ function CheckedIcon({
   const checkboxAnimationStyle = useSpring({
     backgroundColor: isChecked
       ? disabled
-        ? '#d1d5db'
+        ? "#d1d5db"
         : safeVal(color)
         ? color
-        : '#262626'
-      : '#fff',
+        : "#262626"
+      : "#fff",
     borderColor: isChecked
       ? disabled
-        ? '#d1d5db'
+        ? "#d1d5db"
         : safeVal(color)
         ? color
-        : '#262626'
-      : '#ddd',
+        : "#262626"
+      : "#ddd",
   });
   const checkmarkAnimationStyle = useSpring({
     x: isChecked ? 0 : checkmarkLength || 0,
@@ -41,7 +41,7 @@ function CheckedIcon({
   return (
     <animated.svg
       className={clsxm(
-        `checkbox ${isChecked ? 'checkbox--active' : ''} rounded-md`,
+        `checkbox ${isChecked ? "checkbox--active" : ""} rounded-md`,
         className
       )}
       aria-hidden="true"
@@ -59,7 +59,7 @@ function CheckedIcon({
             setCheckmarkLength(ref.getTotalLength());
           }
         }}
-        stroke={isChecked ? '#fff' : 'none'} // only show the checkmark when `isCheck` is `true`
+        stroke={isChecked ? "#fff" : "none"} // only show the checkmark when `isCheck` is `true`
       />
     </animated.svg>
   );

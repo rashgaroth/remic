@@ -6,7 +6,6 @@ coverage/
 # Cruft
 .DS_Store
 npm-debug.log
-.next/
 dist/
 tsdx.config.js
 example/

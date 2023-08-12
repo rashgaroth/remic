@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
-import { Meta, StoryFn } from '@storybook/react';
-import { Button, Modal } from '..';
-import { ModalProps } from '../interfaces/component';
-import { ExclamationCircleIcon } from '@heroicons/react/24/solid';
+import React, { useState } from "react";
+import { Meta, StoryFn } from "@storybook/react";
+import { Button, Modal } from "..";
+import { ModalProps } from "../interfaces/component";
+import { ExclamationCircleIcon } from "@heroicons/react/24/solid";
 
 const meta: Meta = {
-  title: 'Remic/Modal',
+  title: "Remic/Modal",
   component: Modal,
   argTypes: {
     children: {
       control: {
-        type: 'text',
+        type: "text",
       },
     },
   },
@@ -153,7 +153,7 @@ const ModalTemplate: StoryFn<ModalProps> = (args) => {
             headerTitle="Header Title Example"
             overrides={{
               header: {
-                className: 'bg-blue-500',
+                className: "bg-blue-500",
                 closeIcon: ExclamationCircleIcon,
               },
             }}
