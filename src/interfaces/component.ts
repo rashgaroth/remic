@@ -1,8 +1,10 @@
+import { AnimatedComponent, AnimatedProps } from '@react-spring/web';
 import { ClassValue } from 'clsx';
-import {
+import React, {
   ButtonHTMLAttributes,
   ChangeEvent,
   ComponentProps,
+  HTMLAttributes,
   InputHTMLAttributes,
   LabelHTMLAttributes,
   ReactNode,
@@ -82,7 +84,36 @@ export type DropdownInputProps = {
   width?: number;
   dropdownClassName?: ClassValue;
   className?: ClassValue;
-};
+} & InputHTMLAttributes<HTMLInputElement>;
+
+export type ChipProps = {
+  text?: string;
+  loading?: boolean;
+  color?: 'info' | 'success' | 'danger' | 'warning' | string
+  outlined?: boolean;
+  startIcon?: ReactNode;
+  endIcon?: ReactNode;
+  variant?: 'basic' | 'status';
+  clickable?: boolean;
+  handleClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
+} & HTMLAttributes<HTMLDivElement>
+
+export type ModalProps = {
+  open?: boolean;
+  theme?: "light" | 'dark';
+  headerTitle?: string;
+  disableAnimation?: boolean;
+  disableHeader?: boolean;
+  overrides?: {
+    backdropClassName?: ClassValue;
+    header?: {
+      className: ClassValue;
+      closeIcon?: React.ElementType;
+    };
+
+  };
+  close: () => void;
+} & AnimatedProps<AnimatedComponent<"aside">> & React.PropsWithChildren & HTMLAttributes<HTMLElement>;
 
 export type SortOptions = {
   onSort: (key: string) => void;
@@ -183,3 +214,11 @@ export type PaginationProps = {
   boxClassName?: ClassValue;
   showCalculatedPage?: boolean;
 };
+
+export type ShineAnimationProps = {
+  isClicked: boolean;
+  color: {
+    accent: string;
+    className: string;
+  };
+}
