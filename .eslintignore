@@ -6,8 +6,8 @@ coverage/
 # Cruft
 .DS_Store
 npm-debug.log
-.next/
 dist/
 tsdx.config.js
 example/
 tailwind.config.js
+postcss.config.js

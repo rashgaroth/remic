@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0",
+  "version": "1.0.0-alpha.0",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -19,7 +19,8 @@
     "analyze": "size-limit --why",
     "sb": "npx storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "lint": "eslint ."
+    "lint": "eslint '**/*.{ts,tsx}'",
+    "lint:fix": "eslint '**/*.{ts,tsx}' --fix"
   },
   "peerDependencies": {
     "react": ">=16"
@@ -29,27 +30,22 @@
       "pre-commit": "tsdx lint"
     }
   },
-  "prettier": {
-    "printWidth": 80,
-    "semi": true,
-    "singleQuote": true,
-    "trailingComma": "es5"
-  },
-  "name": "remic",
+  "name": "@remic/ui",
   "author": "rashgaroth",
-  "module": "dist/remic.esm.js",
+  "module": "dist/core.esm.js",
   "size-limit": [
     {
-      "path": "dist/remic.cjs.production.min.js",
-      "limit": "10 KB"
+      "path": "dist/core.cjs.production.min.js",
+      "limit": "100 KB"
     },
     {
-      "path": "dist/remic.esm.js",
-      "limit": "10 KB"
+      "path": "dist/core.esm.js",
+      "limit": "100 KB"
     }
   ],
   "devDependencies": {
     "@babel/core": "^7.22.9",
+    "@babel/plugin-proposal-optional-chaining": "^7.21.0",
     "@babel/preset-env": "^7.22.9",
     "@babel/preset-react": "^7.22.5",
     "@babel/preset-typescript": "^7.22.5",
@@ -62,6 +58,7 @@
     "@storybook/addons": "^7.0.27",
     "@storybook/react": "^7.0.27",
     "@storybook/react-webpack5": "^7.0.27",
+    "@tailwindcss/forms": "^0.5.4",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
@@ -74,19 +71,33 @@
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-jsx-a11y": "^6.7.1",
+    "eslint-plugin-prettier": "5.0.0",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "husky": "^8.0.3",
     "postcss": "^8.4.26",
+    "prettier": "^3.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-is": "^18.2.0",
     "rollup-plugin-postcss": "^4.0.2",
+    "rollup-plugin-uglify": "^6.0.4",
     "size-limit": "^8.2.6",
     "storybook": "^7.0.27",
     "tailwindcss": "^3.3.3",
+    "tsconfig-paths-webpack-plugin": "^4.1.0",
     "tsdx": "^0.14.1",
     "tslib": "^2.6.0",
-    "typescript": "^5.1.6"
+    "typescript": "^5.1.6",
+    "uglifyjs-webpack-plugin": "^2.2.0"
+  },
+  "dependencies": {
+    "@headlessui/react": "^1.7.15",
+    "@heroicons/react": "^2.0.18",
+    "@react-spring/web": "^9.7.3",
+    "@wp-g2/styles": "^0.0.164",
+    "clsx": "^1.2.1",
+    "dayjs": "^1.11.9",
+    "tailwind-merge": "^1.13.2"
   }
 }

@@ -1,7 +1,9 @@
 const postcss = require('rollup-plugin-postcss');
+const { uglify } = require('rollup-plugin-uglify');
 
 module.exports = {
   rollup(config, options) {
+
     config.plugins.push(
       postcss({
         config: {
@@ -14,6 +16,9 @@ module.exports = {
         },
       })
     );
+    config.plugins.push(
+      uglify()
+    )
     return config;
   },
 };
