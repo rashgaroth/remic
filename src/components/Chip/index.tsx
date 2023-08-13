@@ -1,8 +1,19 @@
-import React, { useMemo, useState } from "react";
+import React, { HTMLAttributes, ReactNode, useMemo, useState } from "react";
 import clsxm from "../../utils/clsxm";
-import { ChipProps } from "../../interfaces/component";
-import useChipController from "../../hooks/useChipController";
+import useChipController from "./useChipController";
 import ShineAnimation from "../../components/ShineAnimation";
+
+export type ChipProps = {
+  text?: string;
+  loading?: boolean;
+  color?: "info" | "success" | "danger" | "warning" | string;
+  outlined?: boolean;
+  startIcon?: ReactNode;
+  endIcon?: ReactNode;
+  variant?: "basic" | "status";
+  clickable?: boolean;
+  handleClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+} & HTMLAttributes<HTMLDivElement>;
 
 function Chip({
   text,

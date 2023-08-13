@@ -2,8 +2,47 @@
 import * as React from "react";
 import { ExclamationCircleIcon } from "@heroicons/react/24/solid";
 import clsxm from "../../utils/clsxm";
-import { TextFieldProps } from "../../interfaces/component";
 import { safeFunction } from "../../utils/common";
+
+export type FormatterInput = {
+  type: "money" | "phone" | "number";
+  customRegex?: RegExp;
+  execWhenChange?: boolean;
+  onError?: (value: string) => void;
+  currencySymbol?: string;
+  decimalLimit?: number;
+  separator?: string;
+};
+
+export type Rules = {
+  maxValue?: number;
+  minValue?: number;
+  required?: boolean;
+  onError?: (value: "max" | "required" | "min") => string;
+};
+
+export type TextFieldProps<T = HTMLInputElement> = {
+  label?: string;
+  fullWidth?: boolean;
+  width?: number;
+  rules?: Rules;
+  // icons
+  endIcon?: React.ReactNode;
+  // formatter
+  formatter?: FormatterInput;
+  // error
+  errorIcon?: React.ReactNode;
+  error?: boolean;
+  errormsg?: string;
+  // success
+  success?: boolean;
+  successmsg?: string;
+  successIcon?: React.ReactNode;
+  // label
+  labelProps?: React.LabelHTMLAttributes<HTMLLabelElement>;
+  LabelComponent?: React.ReactNode;
+  labelClassName?: React.ComponentProps<"label">["className"];
+} & React.InputHTMLAttributes<T>;
 
 function RenderErrorIcon({
   EndIcon,

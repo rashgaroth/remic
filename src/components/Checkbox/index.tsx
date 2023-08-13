@@ -1,20 +1,35 @@
 import * as React from "react";
-import { CheckboxProps } from "../../interfaces/component";
 import { animated, useSpring } from "@react-spring/web";
 import clsxm from "../../utils/clsxm";
 import { safeVal } from "../../utils/common";
+
+export type CheckedIconProps = {
+  isChecked: boolean;
+  className?: string;
+  disabled?: boolean;
+  color?: string;
+};
+
+export type CheckboxProps = {
+  label?: string;
+  checked?: boolean;
+  onChange?: (
+    ev: React.ChangeEvent<HTMLInputElement>,
+    checked: boolean
+  ) => void;
+  className?: string;
+  id?: string;
+  name?: string;
+  disabled?: boolean;
+  color?: string;
+};
 
 function CheckedIcon({
   isChecked,
   className,
   disabled,
   color,
-}: {
-  isChecked: boolean;
-  className?: string;
-  disabled?: boolean;
-  color?: string;
-}) {
+}: CheckedIconProps) {
   const [checkmarkLength, setCheckmarkLength] = React.useState<number | null>(
     null
   );

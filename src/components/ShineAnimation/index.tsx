@@ -1,6 +1,13 @@
-import { ShineAnimationProps } from "../../interfaces/component";
 import clsxm from "../../utils/clsxm";
 import React from "react";
+
+export type ShineAnimationProps = {
+  show: boolean;
+  color: {
+    accent: string;
+    className: string;
+  };
+};
 
 const ShineAnimation = ({ color, show }: ShineAnimationProps) => {
   return (

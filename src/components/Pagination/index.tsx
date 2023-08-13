@@ -1,6 +1,14 @@
 import React, { useEffect } from "react";
-import { PaginationProps } from "../../interfaces/component";
 import clsxm from "../../utils/clsxm";
+import { ClassValue } from "clsx";
+
+export type PaginationProps = {
+  totalPage: number;
+  onPageChange?: (page: number) => void;
+  className?: ClassValue;
+  boxClassName?: ClassValue;
+  showCalculatedPage?: boolean;
+};
 
 export default function Pagination(props: PaginationProps) {
   const {

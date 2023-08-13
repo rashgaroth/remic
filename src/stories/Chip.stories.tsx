@@ -1,8 +1,8 @@
 import React from "react";
 import { Chip } from "..";
-import { ChipProps } from "../interfaces/component";
 import { Meta, StoryFn } from "@storybook/react";
 import { InformationCircleIcon, XCircleIcon } from "@heroicons/react/24/solid";
+import { ChipProps } from "../components/Chip";
 
 const meta: Meta = {
   title: "Remic/Chip",

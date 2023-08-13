@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Meta, StoryFn } from "@storybook/react";
 import { Button, Modal } from "..";
-import { ModalProps } from "../interfaces/component";
 import { ExclamationCircleIcon } from "@heroicons/react/24/solid";
+import { ModalProps } from "../components/Modal";
 
 const meta: Meta = {
   title: "Remic/Modal",

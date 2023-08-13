@@ -1,8 +1,31 @@
-import React from "react";
-import { animated, useSpring } from "@react-spring/web";
-import { ModalProps } from "../../interfaces/component";
+import React, { HTMLAttributes } from "react";
+import {
+  AnimatedComponent,
+  AnimatedProps,
+  animated,
+  useSpring,
+} from "@react-spring/web";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import clsxm from "../../utils/clsxm";
+import { ClassValue } from "clsx";
+
+export type ModalProps = {
+  open?: boolean;
+  theme?: "light" | "dark";
+  headerTitle?: string;
+  disableAnimation?: boolean;
+  disableHeader?: boolean;
+  overrides?: {
+    backdropClassName?: ClassValue;
+    header?: {
+      className: ClassValue;
+      closeIcon?: React.ElementType;
+    };
+  };
+  close: () => void;
+} & AnimatedProps<AnimatedComponent<"aside">> &
+  React.PropsWithChildren &
+  HTMLAttributes<HTMLElement>;
 
 const Modal = ({
   open,

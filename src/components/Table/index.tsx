@@ -1,16 +1,90 @@
 "use client";
 
-import React from "react";
-import {
-  HeaderProps,
-  TableDataProps,
-  TableProps,
-} from "../../interfaces/component";
+import React, { ReactNode } from "react";
 import { isZeroArray, safeArray, safeVal } from "../../utils/common";
 import clsxm from "../../utils/clsxm";
 import { ClassValue } from "clsx";
 import Checkbox from "../../components/Checkbox";
 import Pagination from "../../components/Pagination";
+
+export type SortOptions = {
+  onSort: (key: string) => void;
+  order: "ASC" | "DESC";
+  icon?: ReactNode;
+  showDefault?: boolean;
+};
+
+export type HeaderProps = {
+  label: string | ReactNode;
+  key: string;
+  icon?: ReactNode;
+  alignment?: "left" | "right" | "center";
+  sort?: SortOptions;
+  width?: number;
+
+  thProps?: React.DetailedHTMLProps<
+    React.ThHTMLAttributes<HTMLTableHeaderCellElement>,
+    HTMLTableHeaderCellElement
+  >;
+  tdProps?: React.DetailedHTMLProps<
+    React.TdHTMLAttributes<HTMLTableDataCellElement>,
+    HTMLTableDataCellElement
+  >;
+
+  thClassName?: ClassValue;
+  tdClassName?: ClassValue;
+  renderData?: (data: string | number | boolean | unknown) => ReactNode;
+};
+
+export type TableDataProps = {
+  [x: string]: any;
+  defaultRemicChecked?: boolean;
+  disabledChecked?: boolean;
+};
+
+export type TableProps = {
+  headers: HeaderProps[];
+  data: TableDataProps[] | [] | null;
+  loading?: boolean;
+  emptyMessage?: string | ReactNode;
+  usePagination?: boolean;
+  title?: string | ReactNode;
+  description?: string;
+  striped?: "even" | "odd";
+
+  titleProps?: React.DetailedHTMLProps<
+    React.HTMLAttributes<HTMLHeadingElement>,
+    HTMLHeadingElement
+  >;
+  descriptionProps?: React.DetailedHTMLProps<
+    React.HTMLAttributes<HTMLParagraphElement>,
+    HTMLParagraphElement
+  >;
+  tableProps?: React.DetailedHTMLProps<
+    React.TableHTMLAttributes<HTMLTableElement>,
+    HTMLTableElement
+  >;
+  tableBodyProps?: React.DetailedHTMLProps<
+    React.HTMLAttributes<HTMLTableSectionElement>,
+    HTMLTableSectionElement
+  >;
+  tableHeadProps?: React.DetailedHTMLProps<
+    React.HTMLAttributes<HTMLTableSectionElement>,
+    HTMLTableSectionElement
+  >;
+
+  useSkeleton?: boolean;
+  onEdit?: (data: TableDataProps) => void;
+  onDelete?: (data: TableDataProps) => void;
+  onRowClick?: (
+    data: TableDataProps,
+    event: React.MouseEvent<HTMLTableDataCellElement, MouseEvent>
+  ) => void;
+  onChecked?: (data: TableDataProps[] | TableDataProps) => void;
+  initialRowsPerPage?: number;
+  rowsPerPageOptions?: number[];
+  page?: number;
+};
 
 function Td({
   alignment,

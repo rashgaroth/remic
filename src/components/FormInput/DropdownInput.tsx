@@ -1,6 +1,5 @@
 import * as React from "react";
 import { TextField, Loader } from "../../components";
-import { DropdownInputProps } from "../../interfaces/component";
 import {
   useSpring,
   animated,
@@ -12,6 +11,37 @@ import {
 import clsxm from "../../utils/clsxm";
 import { safeFunction } from "../../utils/common";
 import Close from "../../svgs/Close";
+import { ClassValue } from "clsx";
+import { TextFieldProps } from "./TextField";
+
+export type AsyncDropdownData = {
+  label: string;
+  value: any;
+};
+
+export type DropdownInputProps = {
+  onSearch?: (value: React.ChangeEvent<HTMLInputElement>) => void;
+  loaderColor?: string;
+  loading?: boolean;
+  data: AsyncDropdownData[];
+  onChange?: (value: AsyncDropdownData | null) => void;
+  onOpen?: () => void;
+  onClose?: (
+    e:
+      | React.FocusEvent<HTMLInputElement, Element>
+      | React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => void;
+  initValue?: AsyncDropdownData;
+  dropdownValue?: AsyncDropdownData | null | undefined;
+  CloseIcon?: React.ReactNode;
+  disableType?: boolean;
+  textFieldProps?: TextFieldProps;
+  label?: string;
+  placeholder?: string;
+  width?: number;
+  dropdownClassName?: ClassValue;
+  className?: ClassValue;
+} & React.InputHTMLAttributes<HTMLInputElement>;
 
 export default function DropdownInput(props: DropdownInputProps) {
   const {

@@ -1,15 +1,15 @@
-import React from 'react';
-import { Meta, StoryFn } from '@storybook/react';
-import { DropdownInput } from '..';
-import { DropdownInputProps } from '../interfaces/component';
+import React from "react";
+import { Meta, StoryFn } from "@storybook/react";
+import { DropdownInput } from "..";
+import { DropdownInputProps } from "../components/FormInput/DropdownInput";
 
 const meta: Meta = {
-  title: 'Remic/DropdownInput',
+  title: "Remic/DropdownInput",
   component: DropdownInput,
   argTypes: {
     children: {
       control: {
-        type: 'text',
+        type: "text",
       },
     },
   },
@@ -27,58 +27,58 @@ function sleep(delay = 0) {
 }
 
 type Film = {
-  label: string
-  value: number
-}
+  label: string;
+  value: number;
+};
 
 const topFilms = [
-  { label: 'The Shawshank Redemption', value: 1994 },
-  { label: 'The Godfather', value: 1972 },
-  { label: 'The Godfather: Part II', value: 1974 },
-  { label: 'The Dark Knight', value: 2008 },
-  { label: '12 Angry Men', value: 1957 },
+  { label: "The Shawshank Redemption", value: 1994 },
+  { label: "The Godfather", value: 1972 },
+  { label: "The Godfather: Part II", value: 1974 },
+  { label: "The Dark Knight", value: 2008 },
+  { label: "12 Angry Men", value: 1957 },
   { label: "Schindler's List", value: 1993 },
-  { label: 'Pulp Fiction', value: 1994 },
+  { label: "Pulp Fiction", value: 1994 },
   {
-    label: 'The Lord of the Rings: The Return of the King',
+    label: "The Lord of the Rings: The Return of the King",
     value: 2003,
   },
-  { label: 'The Good, the Bad and the Ugly', value: 1966 },
-  { label: 'Fight Club', value: 1999 },
+  { label: "The Good, the Bad and the Ugly", value: 1966 },
+  { label: "Fight Club", value: 1999 },
   {
-    label: 'The Lord of the Rings: The Fellowship of the Ring',
+    label: "The Lord of the Rings: The Fellowship of the Ring",
     value: 2001,
   },
   {
-    label: 'Star Wars: Episode V - The Empire Strikes Back',
+    label: "Star Wars: Episode V - The Empire Strikes Back",
     value: 1980,
   },
-  { label: 'Forrest Gump', value: 1994 },
-  { label: 'Inception', value: 2010 },
+  { label: "Forrest Gump", value: 1994 },
+  { label: "Inception", value: 2010 },
   {
-    label: 'The Lord of the Rings: The Two Towers',
+    label: "The Lord of the Rings: The Two Towers",
     value: 2002,
   },
   { label: "One Flew Over the Cuckoo's Nest", value: 1975 },
-  { label: 'Goodfellas', value: 1990 },
-  { label: 'The Matrix', value: 1999 },
-  { label: 'Seven Samurai', value: 1954 },
+  { label: "Goodfellas", value: 1990 },
+  { label: "The Matrix", value: 1999 },
+  { label: "Seven Samurai", value: 1954 },
   {
-    label: 'Star Wars: Episode IV - A New Hope',
+    label: "Star Wars: Episode IV - A New Hope",
     value: 1977,
   },
-  { label: 'City of God', value: 2002 },
-  { label: 'Se7en', value: 1995 },
-  { label: 'The Silence of the Lambs', value: 1991 },
+  { label: "City of God", value: 2002 },
+  { label: "Se7en", value: 1995 },
+  { label: "The Silence of the Lambs", value: 1991 },
   { label: "It's a Wonderful Life", value: 1946 },
-  { label: 'Life Is Beautiful', value: 1997 },
-  { label: 'The Usual Suspects', value: 1995 },
-  { label: 'Léon: The Professional', value: 1994 },
-  { label: 'Spirited Away', value: 2001 },
-  { label: 'Saving Private Ryan', value: 1998 },
-  { label: 'Once Upon a Time in the West', value: 1968 },
-  { label: 'American History X', value: 1998 },
-  { label: 'Interstellar', value: 2014 },
+  { label: "Life Is Beautiful", value: 1997 },
+  { label: "The Usual Suspects", value: 1995 },
+  { label: "Léon: The Professional", value: 1994 },
+  { label: "Spirited Away", value: 2001 },
+  { label: "Saving Private Ryan", value: 1998 },
+  { label: "Once Upon a Time in the West", value: 1968 },
+  { label: "American History X", value: 1998 },
+  { label: "Interstellar", value: 2014 },
 ];
 
 const DropdownInputTemplate: StoryFn<DropdownInputProps> = () => {
@@ -126,11 +126,11 @@ const DropdownInputTemplate: StoryFn<DropdownInputProps> = () => {
             disableType
             data={[
               {
-                label: 'User1',
+                label: "User1",
                 value: 1,
               },
               {
-                label: 'User2',
+                label: "User2",
                 value: 2,
               },
             ]}
@@ -138,7 +138,7 @@ const DropdownInputTemplate: StoryFn<DropdownInputProps> = () => {
             placeholder="Search here ..."
             textFieldProps={{
               error: true,
-              errormsg: 'This is error message',
+              errormsg: "This is error message",
             }}
           />
         </div>

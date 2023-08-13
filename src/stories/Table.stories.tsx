@@ -1,7 +1,7 @@
 import React from "react";
 import { Meta, StoryFn } from "@storybook/react";
 import { Table } from "..";
-import { HeaderProps, TableProps } from "../interfaces/component";
+import { HeaderProps, TableProps } from "../components/Table";
 
 const meta: Meta = {
   title: "Remic/Table",

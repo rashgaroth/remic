@@ -1,7 +1,7 @@
 import React from "react";
 import { Meta, StoryFn } from "@storybook/react";
 import { Button } from "..";
-import { ButtonProps } from "../interfaces/component";
+import { ButtonProps } from "../components/Button";
 
 const meta: Meta = {
   title: "Remic/Buttons",

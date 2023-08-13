@@ -1,8 +1,14 @@
 /* eslint-disable no-multi-assign */
-import React from "react";
+import React, { ButtonHTMLAttributes } from "react";
 import clsxm from "../../utils/clsxm";
-import { ButtonProps } from "../../interfaces/component";
-import { Loader } from "../../components/index";
+import { Loader } from "..";
+
+export type ButtonProps = {
+  loading?: boolean;
+  danger?: boolean;
+  success?: boolean;
+  outlined?: boolean;
+} & ButtonHTMLAttributes<HTMLButtonElement>;
 
 function Button(props: ButtonProps) {
   const {
