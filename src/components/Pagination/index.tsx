@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import { PaginationProps } from "@remic/interfaces/component";
-import clsxm from "@remic/utils/clsxm";
+import { PaginationProps } from "../../interfaces/component";
+import clsxm from "../../utils/clsxm";
 
 export default function Pagination(props: PaginationProps) {
   const {

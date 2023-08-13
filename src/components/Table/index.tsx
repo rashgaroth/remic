@@ -5,12 +5,12 @@ import {
   HeaderProps,
   TableDataProps,
   TableProps,
-} from "@remic/interfaces/component";
-import { isZeroArray, safeArray, safeVal } from "@remic/utils/common";
-import clsxm from "@remic/utils/clsxm";
+} from "../../interfaces/component";
+import { isZeroArray, safeArray, safeVal } from "../../utils/common";
+import clsxm from "../../utils/clsxm";
 import { ClassValue } from "clsx";
-import Checkbox from "@remic/components/Checkbox";
-import Pagination from "@remic/components/Pagination";
+import Checkbox from "../../components/Checkbox";
+import Pagination from "../../components/Pagination";
 
 function Td({
   alignment,

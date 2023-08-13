@@ -9,7 +9,6 @@
     "sourceMap": true,
     "rootDir": "./src",
     "strict": true,
-    "baseUrl": ".",
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "noUnusedLocals": true,
@@ -20,13 +19,6 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
-    "target": "ESNext",
-    "paths": {
-      "@remic/components/*": ["src/components/*"],
-      "@remic/hooks/*": ["src/hooks/*"],
-      "@remic/utils/*": ["src/utils/*"],
-      "@remic/interfaces/*": ["src/interfaces/*"],
-      "@remic/svgs/*": ["src/svgs/*"]
-    }
+    "target": "ESNext"
   }
 }

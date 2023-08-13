@@ -1,6 +1,6 @@
-import * as React from 'react';
-import { TextField, Loader } from '@remic/components/index';
-import { DropdownInputProps } from '@remic/interfaces/component';
+import * as React from "react";
+import { TextField, Loader } from "../../components";
+import { DropdownInputProps } from "../../interfaces/component";
 import {
   useSpring,
   animated,
@@ -8,10 +8,10 @@ import {
   useSpringRef,
   config,
   useChain,
-} from '@react-spring/web';
-import clsxm from '@remic/utils/clsxm';
-import { safeFunction } from '@remic/utils/common';
-import Close from '@remic/svgs/Close';
+} from "@react-spring/web";
+import clsxm from "../../utils/clsxm";
+import { safeFunction } from "../../utils/common";
+import Close from "../../svgs/Close";
 
 export default function DropdownInput(props: DropdownInputProps) {
   const {
@@ -29,7 +29,7 @@ export default function DropdownInput(props: DropdownInputProps) {
     ...rest
   } = props;
   const [isFocus, setIsFocus] = React.useState(false);
-  const [currentValue, setCurrentValue] = React.useState('');
+  const [currentValue, setCurrentValue] = React.useState("");
   const [listCurrentTarget, setListCurrentTarget] = React.useState<
     (EventTarget & HTMLDivElement) | null
   >(null);
@@ -45,11 +45,11 @@ export default function DropdownInput(props: DropdownInputProps) {
     ref: springApi,
     config: config.gentle,
     from: {
-      height: '0%',
+      height: "0%",
       opacity: 0,
     },
     to: {
-      height: isFocus ? '100%' : '0%',
+      height: isFocus ? "100%" : "0%",
       opacity: isFocus ? 1 : 0,
     },
   });
@@ -76,7 +76,7 @@ export default function DropdownInput(props: DropdownInputProps) {
         return (
           <div
             onClick={() => {
-              setCurrentValue('');
+              setCurrentValue("");
               if (onChange && safeFunction(onChange)) {
                 onChange(null);
               }
@@ -93,12 +93,12 @@ export default function DropdownInput(props: DropdownInputProps) {
         />
       );
     }
-    if (!loading && !isFocus && currentValue !== '') {
+    if (!loading && !isFocus && currentValue !== "") {
       if (CloseIcon) {
         return (
           <div
             onClick={() => {
-              setCurrentValue('');
+              setCurrentValue("");
               if (onChange && safeFunction(onChange)) {
                 onChange(null);
               }
@@ -112,7 +112,7 @@ export default function DropdownInput(props: DropdownInputProps) {
         <Close
           className="inline mr-1 w-4 h-4 text-gray-400 cursor-pointer"
           onClick={() => {
-            setCurrentValue('');
+            setCurrentValue("");
             if (onChange && safeFunction(onChange)) {
               onChange(null);
             }
@@ -126,7 +126,7 @@ export default function DropdownInput(props: DropdownInputProps) {
   React.useEffect(() => {
     if (dropdownValue) {
       if (!dropdownValue.label) {
-        throw new Error('Dropdown value must have label property');
+        throw new Error("Dropdown value must have label property");
       }
       setCurrentValue(dropdownValue.label);
     }
@@ -160,27 +160,27 @@ export default function DropdownInput(props: DropdownInputProps) {
             setIsFocus(false);
           }
         }}
-        className={clsxm('px-5', rest.className && rest.className)}
+        className={clsxm("px-5", rest.className && rest.className)}
         role="combobox"
         spellCheck={false}
         endIcon={getEndIcon()}
         value={currentValue}
-        placeholder={rest.placeholder ?? ''}
-        label={rest.label ?? ''}
+        placeholder={rest.placeholder ?? ""}
+        label={rest.label ?? ""}
         {...rest.textFieldProps}
       />
       <animated.div
         ref={dropdownDivRef}
         className={clsxm(
-          'w-full mt-1 flex flex-col space-y-1 rounded-md z-50 shadow-lg relative overflow-hidden overflow-y-scroll',
-          'transition-all delay-150 duration-300 ease-in-out',
-          'bg-white',
+          "w-full mt-1 flex flex-col space-y-1 rounded-md z-50 shadow-lg relative overflow-hidden overflow-y-scroll",
+          "transition-all delay-150 duration-300 ease-in-out",
+          "bg-white",
           rest.dropdownClassName
         )}
         style={{
           ...springRest,
           height,
-          width: 'auto',
+          width: "auto",
           maxHeight: 290,
         }}
       >
@@ -203,9 +203,9 @@ export default function DropdownInput(props: DropdownInputProps) {
                 }
               }}
               className={clsxm(
-                'text-sm text-gray-800 hover:bg-gray-100 z-40 cursor-pointer px-5 py-2 divide-y',
-                idx === data.length - 1 && 'rounded-b-md',
-                idx === 0 && 'rounded-t-md'
+                "text-sm text-gray-800 hover:bg-gray-100 z-40 cursor-pointer px-5 py-2 divide-y",
+                idx === data.length - 1 && "rounded-b-md",
+                idx === 0 && "rounded-t-md"
               )}
               key={idx}
             >

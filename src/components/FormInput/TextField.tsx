@@ -1,9 +1,9 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import * as React from 'react';
-import { ExclamationCircleIcon } from '@heroicons/react/24/solid';
-import clsxm from '@remic/utils/clsxm';
-import { TextFieldProps } from '@remic/interfaces/component';
-import { safeFunction } from '@remic/utils/common';
+import * as React from "react";
+import { ExclamationCircleIcon } from "@heroicons/react/24/solid";
+import clsxm from "../../utils/clsxm";
+import { TextFieldProps } from "../../interfaces/component";
+import { safeFunction } from "../../utils/common";
 
 function RenderErrorIcon({
   EndIcon,
@@ -12,11 +12,11 @@ function RenderErrorIcon({
   success,
   successIcon,
 }: {
-  EndIcon: React.ReactNode
-  ErrorIcon: React.ReactNode
-  error: boolean
-  success: boolean
-  successIcon: React.ReactNode
+  EndIcon: React.ReactNode;
+  ErrorIcon: React.ReactNode;
+  error: boolean;
+  success: boolean;
+  successIcon: React.ReactNode;
 }): React.ReactElement | null {
   return EndIcon && !error ? (
     <div>{EndIcon as React.ReactNode}</div>
@@ -36,7 +36,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
   function TextField(props, ref) {
     const {
       error = false,
-      errormsg = '',
+      errormsg = "",
       className,
       id,
       label,
@@ -56,32 +56,32 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
     } = props;
 
     const [tmpError, setTmpError] = React.useState(false);
-    const [tmpErrMsg, setTmpErrMsg] = React.useState('');
+    const [tmpErrMsg, setTmpErrMsg] = React.useState("");
     const [isFocus, setIsFocus] = React.useState(false);
 
     const onError = formatter?.onError;
     const rgx = formatter?.customRegex;
     const numReg = rgx || /^[0-9]*(\.|,)?[0-9]*$/;
-    const separator = formatter?.separator || '-';
+    const separator = formatter?.separator || "-";
     const decimalLimit = formatter?.decimalLimit || 4;
     const execWhenChange = formatter?.execWhenChange;
     const type = formatter?.type;
 
-    const getClasses = (): React.ComponentProps<'label'>['className'] => {
+    const getClasses = (): React.ComponentProps<"label">["className"] => {
       if (error || tmpError) {
-        return 'border-red-300 text-red-500 placeholder-red-300 focus:ring-red-500 ring-red-300';
+        return "border-red-300 text-red-500 placeholder-red-300 focus:ring-red-500 ring-red-300";
       }
       if (success) {
-        return 'border-green-500 text-green-500 placeholder-green-500 focus:ring-green-500 ring-green-500';
+        return "border-green-500 text-green-500 placeholder-green-500 focus:ring-green-500 ring-green-500";
       }
-      return 'border-gray-300 text-gray-700 placeholder-gray-300 focus:ring-gray-500 ring-gray-300';
+      return "border-gray-300 text-gray-700 placeholder-gray-300 focus:ring-gray-500 ring-gray-300";
     };
 
     const formatPhoneNumber = (
       value: string,
       execOnChange: (customVal?: string) => void
     ): string | undefined => {
-      if (execWhenChange && value !== '') {
+      if (execWhenChange && value !== "") {
         if (!numReg.test(value[0])) {
           return;
         }
@@ -93,11 +93,11 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
         }
       }
       const regex = new RegExp(
-        new RegExp('(\\d)(?=(\\d{' + decimalLimit + '})+(?!\\d))', 'g')
+        new RegExp("(\\d)(?=(\\d{" + decimalLimit + "})+(?!\\d))", "g")
       );
       const val = value
-        .replace(/[^0-9\.]/g, '')
-        .replace(/\.+$/, '')
+        .replace(/[^0-9\.]/g, "")
+        .replace(/\.+$/, "")
         .replace(regex, `$1${separator}`);
 
       return val;
@@ -108,7 +108,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
       execOnChange: (customVal?: string) => void
     ): string | undefined => {
       const regex = /^[0-9]*(\.|,)?[0-9]*$/;
-      if (execWhenChange && value !== '') {
+      if (execWhenChange && value !== "") {
         if (!regex.test(value[0])) {
           return;
         }
@@ -119,9 +119,9 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
           return;
         }
       }
-      let val = value.replace(/[^0-9\.]/g, '');
-      val = val.replace(/\.+$/, '').replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-      if (val.split('.').length > 2) val = val.replace(/\.+$/, '');
+      let val = value.replace(/[^0-9\.]/g, "");
+      val = val.replace(/\.+$/, "").replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+      if (val.split(".").length > 2) val = val.replace(/\.+$/, "");
       return val;
     };
 
@@ -154,13 +154,13 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
         }
       }
 
-      if (type === 'money') {
+      if (type === "money") {
         return execOnChange(formatMoney(value, execOnChange) as string);
       }
 
-      if (type === 'number') {
+      if (type === "number") {
         const regex = rgx || /^[0-9]*$/;
-        if (execWhenChange && value !== '') {
+        if (execWhenChange && value !== "") {
           if (!regex.test(value)) {
             return;
           }
@@ -173,7 +173,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
         return execOnChange(value);
       }
 
-      if (type === 'phone') {
+      if (type === "phone") {
         let val = value;
         val = formatPhoneNumber(value, execOnChange) as string;
         if (!val) {
@@ -188,11 +188,11 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
     React.useEffect(() => {
       if (rules && !isFocus) {
         if (rules.required) {
-          if (rest.value === '') {
+          if (rest.value === "") {
             setTmpError(true);
             if (rules.onError && safeFunction(rules.onError)) {
               setTmpErrMsg(
-                rules.onError('required') || 'This field is required'
+                rules.onError("required") || "This field is required"
               );
             }
             return;
@@ -203,7 +203,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
             setTmpError(true);
             if (rules.onError && safeFunction(rules.onError)) {
               setTmpErrMsg(
-                rules.onError('min') || "Value can't be less than minValue"
+                rules.onError("min") || "Value can't be less than minValue"
               );
             }
             return;
@@ -214,7 +214,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
             setTmpError(true);
             if (rules.onError && safeFunction(rules.onError)) {
               setTmpErrMsg(
-                rules.onError('max') || "Value can't be greater than maxValue"
+                rules.onError("max") || "Value can't be greater than maxValue"
               );
             }
             return;
@@ -222,7 +222,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
         }
       } else {
         setTmpError(false);
-        setTmpErrMsg('');
+        setTmpErrMsg("");
       }
     }, [isFocus]);
 
@@ -242,7 +242,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
             <label
               htmlFor={id}
               className={clsxm(
-                'block text-sm z-20 font-medium leading-6 text-gray-900',
+                "block text-sm z-20 font-medium leading-6 text-gray-900",
                 labelClassName
               )}
               {...labelProps}
@@ -252,15 +252,15 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
           ))}
         <div
           className={clsxm(
-            'relative mt-0 rounded-md shadow-sm',
-            fullWidth && 'block w-full'
+            "relative mt-0 rounded-md shadow-sm",
+            fullWidth && "block w-full"
           )}
           style={{
-            width: width ?? 'auto',
+            width: width ?? "auto",
           }}
         >
           {formatter &&
-            formatter.type === 'money' &&
+            formatter.type === "money" &&
             formatter.currencySymbol && (
               <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                 <span className="text-gray-500 sm:text-sm">
@@ -285,13 +285,13 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
             }}
             className={clsxm(
               `px-2 rounded-md border-0 py-2 pr-10 z-20 ring-1 focus:ring-2 ring-inset block w-full focus:ring-inset sm:text-sm sm:leading-6`,
-              'delay-100 duration-300 ease-in-out transition',
+              "delay-100 duration-300 ease-in-out transition",
               getClasses(),
               className,
               formatter &&
-                formatter.type === 'money' &&
+                formatter.type === "money" &&
                 formatter.currencySymbol &&
-                'pl-9'
+                "pl-9"
             )}
             onChange={(e) => {
               if (formatter && formatter.type) {

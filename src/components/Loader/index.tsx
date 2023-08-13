@@ -1,5 +1,5 @@
 import * as React from "react";
-import clsxm from "@remic/utils/clsxm";
+import clsxm from "../../utils/clsxm";
 
 export default function Loader(props: React.SVGProps<SVGSVGElement>) {
   return (

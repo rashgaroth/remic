@@ -2,7 +2,7 @@ import * as React from "react";
 import { CheckboxProps } from "../../interfaces/component";
 import { animated, useSpring } from "@react-spring/web";
 import clsxm from "../../utils/clsxm";
-import { safeVal } from "@remic/utils/common";
+import { safeVal } from "../../utils/common";
 
 function CheckedIcon({
   isChecked,
@@ -13,7 +13,7 @@ function CheckedIcon({
   isChecked: boolean;
   className?: string;
   disabled?: boolean;
-  color?: `#${string}`;
+  color?: string;
 }) {
   const [checkmarkLength, setCheckmarkLength] = React.useState<number | null>(
     null

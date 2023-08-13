@@ -1,8 +1,8 @@
 /* eslint-disable no-multi-assign */
 import React from "react";
-import clsxm from "@remic/utils/clsxm";
-import { ButtonProps } from "@remic/interfaces/component";
-import { Loader } from "@remic/components/index";
+import clsxm from "../../utils/clsxm";
+import { ButtonProps } from "../../interfaces/component";
+import { Loader } from "../../components/index";
 
 function Button(props: ButtonProps) {
   const {

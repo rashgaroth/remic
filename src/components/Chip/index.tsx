@@ -1,8 +1,8 @@
 import React, { useMemo, useState } from "react";
-import clsxm from "@remic/utils/clsxm";
-import { ChipProps } from "@remic/interfaces/component";
-import useChipController from "@remic/hooks/useChipController";
-import ShineAnimation from "@remic/components/ShineAnimation";
+import clsxm from "../../utils/clsxm";
+import { ChipProps } from "../../interfaces/component";
+import useChipController from "../../hooks/useChipController";
+import ShineAnimation from "../../components/ShineAnimation";
 
 function Chip({
   text,

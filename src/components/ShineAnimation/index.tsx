@@ -1,5 +1,5 @@
-import { ShineAnimationProps } from "@remic/interfaces/component";
-import clsxm from "@remic/utils/clsxm";
+import { ShineAnimationProps } from "../../interfaces/component";
+import clsxm from "../../utils/clsxm";
 import React from "react";
 
 const ShineAnimation = ({ color, show }: ShineAnimationProps) => {
