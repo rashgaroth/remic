@@ -8,14 +8,18 @@ import Checkbox from "../../components/Checkbox";
 import Pagination from "../../components/Pagination";
 
 export type SortOptions = {
-  onSort: (key: string) => void;
+  onSort: () => void;
   order: "ASC" | "DESC";
-  icon?: ReactNode;
-  showDefault?: boolean;
 };
 
+export type SortProp = React.DetailedHTMLProps<
+  React.TableHTMLAttributes<HTMLDivElement>,
+  HTMLDivElement
+> &
+  SortOptions;
+
 export type HeaderProps = {
-  label: string | ReactNode;
+  label: string | ReactNode | ((props: SortProp) => ReactNode);
   key: string;
   icon?: ReactNode;
   alignment?: "left" | "right" | "center";
@@ -43,11 +47,21 @@ export type TableDataProps = {
 };
 
 export type TableProps = {
+  // data
   headers: HeaderProps[];
   data: TableDataProps[] | [] | null;
+
+  skeletonCount?: number;
   loading?: boolean;
   emptyMessage?: string | ReactNode;
+
+  // pagination
   usePagination?: boolean;
+  initialRowsPerPage?: number;
+  rowsPerPageOptions?: number[];
+  pageCount?: number;
+
+  // common table props
   title?: string | ReactNode;
   description?: string;
   striped?: "even" | "odd";
@@ -72,8 +86,9 @@ export type TableProps = {
     React.HTMLAttributes<HTMLTableSectionElement>,
     HTMLTableSectionElement
   >;
+  skeletonProps?: React.HTMLAttributes<HTMLTableSectionElement>;
 
-  useSkeleton?: boolean;
+  onSort?: (order: SortOptions["order"], key: HeaderProps["key"]) => void;
   onEdit?: (data: TableDataProps) => void;
   onDelete?: (data: TableDataProps) => void;
   onRowClick?: (
@@ -81,10 +96,16 @@ export type TableProps = {
     event: React.MouseEvent<HTMLTableDataCellElement, MouseEvent>
   ) => void;
   onChecked?: (data: TableDataProps[] | TableDataProps) => void;
-  initialRowsPerPage?: number;
-  rowsPerPageOptions?: number[];
-  page?: number;
 };
+
+function Skeleton(props?: React.HTMLAttributes<HTMLDivElement>) {
+  return (
+    <div
+      className="animate-pulse w-full bg-gray-300 rounded-lg h-5"
+      {...props}
+    />
+  );
+}
 
 function Td({
   alignment,
@@ -131,10 +152,21 @@ function Table(props: TableProps) {
     emptyMessage = "No data available",
     striped,
 
+    usePagination = false,
+    pageCount = 0,
+
+    loading = false,
+    skeletonCount = 5,
+    skeletonProps = {},
+
     onRowClick,
     onChecked,
+    onSort,
   } = props;
   const [allChecked, setAllChecked] = React.useState(false);
+  const [initialSort, setInitialSort] = React.useState<{
+    [x: string]: "ASC" | "DESC";
+  } | null>(null);
 
   const onTrClicked = (
     item: TableDataProps,
@@ -156,6 +188,49 @@ function Table(props: TableProps) {
   const onCheckAll = () => {
     setAllChecked(!allChecked);
     onChecked && onChecked((data && data) || []);
+  };
+
+  const getSkeletonArr = () => {
+    const arr = [];
+    for (let i = 0; i < skeletonCount; i++) {
+      arr.push(i);
+    }
+    return arr;
+  };
+
+  const handleSort = (key: HeaderProps["key"]) => {
+    const order = initialSort?.[key] || "ASC";
+    const newOrder = order === "ASC" ? "DESC" : "ASC";
+    setInitialSort((prev) => ({
+      ...prev,
+      [key]: newOrder,
+    }));
+    if (onSort) {
+      onSort(newOrder, key);
+    }
+  };
+
+  const getLabelRenderer = (
+    label: HeaderProps["label"],
+    key: HeaderProps["key"]
+  ) => {
+    if (typeof label === "function") {
+      const sortOpts = {
+        onSort: () => handleSort(key),
+        order: initialSort?.[key] || "ASC",
+      } as React.DetailedHTMLProps<
+        React.TableHTMLAttributes<HTMLDivElement>,
+        HTMLDivElement
+      > &
+        SortOptions;
+      if (React.isValidElement(label(sortOpts))) {
+        return React.cloneElement<HTMLDivElement & SortOptions>(
+          <div>{label(sortOpts)}</div>
+        );
+      }
+      return label(sortOpts);
+    }
+    return label;
   };
 
   return (
@@ -229,10 +304,14 @@ function Table(props: TableProps) {
                       {shouldRenderCheckbox ? (
                         <div className="flex flex-row items-center space-x-2">
                           <Checkbox onChange={onCheckAll} />
-                          <div>{header.label || ""}</div>
+                          <div>
+                            {getLabelRenderer(header.label, header.key) || ""}
+                          </div>
                         </div>
                       ) : (
-                        <div>{header.label || ""}</div>
+                        <div>
+                          {getLabelRenderer(header.label, header.key) || ""}
+                        </div>
                       )}
                     </th>
                   );
@@ -243,32 +322,79 @@ function Table(props: TableProps) {
               className={clsxm("divide-y divide-gray-300 bg-white")}
               {...tableBodyProps}
             >
-              {data &&
-                safeArray(data as TableDataProps[]).map((item, index) => {
-                  return (
-                    <tr
-                      key={index}
-                      className={clsxm(
-                        onRowClick && "cursor-pointer hover:bg-gray-100",
-                        striped === "even" && index % 2 === 0 && "bg-gray-50",
-                        striped === "odd" && index % 2 !== 0 && "bg-gray-50",
-                        "z-0"
-                      )}
-                    >
-                      {headers.map((header, headerIndex) => {
-                        const { alignment = "left", tdClassName = "" } = header;
-                        const customRender = header.renderData;
-                        const shouldRenderCheckbox = !!(
-                          onChecked && headerIndex === 0
-                        );
-                        const hasDefaultChecked = !!(
-                          safeVal(item.defaultRemicChecked) && onCheck
-                        );
-                        const hasCheckedDisabled = !!(
-                          safeVal(item.disabledChecked) && onCheck
-                        );
+              {!loading
+                ? data &&
+                  safeArray(data as TableDataProps[]).map((item, index) => {
+                    return (
+                      <tr
+                        key={index}
+                        className={clsxm(
+                          onRowClick && "cursor-pointer hover:bg-gray-100",
+                          striped === "even" && index % 2 === 0 && "bg-gray-50",
+                          striped === "odd" && index % 2 !== 0 && "bg-gray-50",
+                          "z-0"
+                        )}
+                      >
+                        {headers.map((header, headerIndex) => {
+                          const { alignment = "left", tdClassName = "" } =
+                            header;
+                          const customRender = header.renderData;
+                          const shouldRenderCheckbox = !!(
+                            onChecked && headerIndex === 0
+                          );
+                          const hasDefaultChecked = !!(
+                            safeVal(item.defaultRemicChecked) && onCheck
+                          );
+                          const hasCheckedDisabled = !!(
+                            safeVal(item.disabledChecked) && onCheck
+                          );
 
-                        if (customRender) {
+                          if (customRender) {
+                            return (
+                              <Td
+                                alignment={alignment}
+                                tdProps={header.tdProps}
+                                key={headerIndex}
+                                onClick={
+                                  shouldRenderCheckbox
+                                    ? undefined
+                                    : (ev) => onTrClicked(item, ev)
+                                }
+                                className={clsxm(
+                                  headerIndex === 0 && "rounded-l-xl",
+                                  headerIndex === headers.length - 1 &&
+                                    "rounded-r-xl",
+                                  "z-0",
+                                  tdClassName
+                                )}
+                              >
+                                {shouldRenderCheckbox ? (
+                                  <div className="relative flex flex-row items-center space-x-2 z-20">
+                                    <Checkbox
+                                      id={`checkbox-${headerIndex}-${header.key}`}
+                                      checked={
+                                        hasDefaultChecked
+                                          ? item.defaultRemicChecked
+                                          : allChecked
+                                      }
+                                      disabled={
+                                        hasCheckedDisabled
+                                          ? item.disabledChecked
+                                          : false
+                                      }
+                                      className="absolute z-50 inset-0"
+                                      onChange={() => onCheck(item)}
+                                    />
+                                    <div className="pl-7">
+                                      {customRender(item?.[header.key] || "")}
+                                    </div>
+                                  </div>
+                                ) : (
+                                  customRender(item?.[header.key] || "")
+                                )}
+                              </Td>
+                            );
+                          }
                           return (
                             <Td
                               alignment={alignment}
@@ -290,12 +416,12 @@ function Table(props: TableProps) {
                               {shouldRenderCheckbox ? (
                                 <div className="relative flex flex-row items-center space-x-2 z-20">
                                   <Checkbox
-                                    id={`checkbox-${headerIndex}-${header.key}`}
                                     checked={
                                       hasDefaultChecked
                                         ? item.defaultRemicChecked
                                         : allChecked
                                     }
+                                    id={`checkbox-${headerIndex}-${header.key}`}
                                     disabled={
                                       hasCheckedDisabled
                                         ? item.disabledChecked
@@ -305,63 +431,41 @@ function Table(props: TableProps) {
                                     onChange={() => onCheck(item)}
                                   />
                                   <div className="pl-7">
-                                    {customRender(item?.[header.key] || "")}
+                                    {item?.[header.key] || ""}
                                   </div>
                                 </div>
                               ) : (
-                                customRender(item?.[header.key] || "")
+                                item?.[header.key] || ""
                               )}
                             </Td>
                           );
-                        }
+                        })}
+                      </tr>
+                    );
+                  })
+                : getSkeletonArr().map((_, index) => (
+                    <tr
+                      key={index}
+                      className={clsxm(
+                        onRowClick && "cursor-pointer hover:bg-gray-100",
+                        striped === "even" && index % 2 === 0 && "bg-gray-50",
+                        striped === "odd" && index % 2 !== 0 && "bg-gray-50",
+                        "z-0"
+                      )}
+                    >
+                      {headers.map((header, headerIndex) => {
                         return (
                           <Td
-                            alignment={alignment}
-                            tdProps={header.tdProps}
                             key={headerIndex}
-                            onClick={
-                              shouldRenderCheckbox
-                                ? undefined
-                                : (ev) => onTrClicked(item, ev)
-                            }
-                            className={clsxm(
-                              headerIndex === 0 && "rounded-l-xl",
-                              headerIndex === headers.length - 1 &&
-                                "rounded-r-xl",
-                              "z-0",
-                              tdClassName
-                            )}
+                            alignment={header.alignment}
+                            tdProps={header.tdProps}
                           >
-                            {shouldRenderCheckbox ? (
-                              <div className="relative flex flex-row items-center space-x-2 z-20">
-                                <Checkbox
-                                  checked={
-                                    hasDefaultChecked
-                                      ? item.defaultRemicChecked
-                                      : allChecked
-                                  }
-                                  id={`checkbox-${headerIndex}-${header.key}`}
-                                  disabled={
-                                    hasCheckedDisabled
-                                      ? item.disabledChecked
-                                      : false
-                                  }
-                                  className="absolute z-50 inset-0"
-                                  onChange={() => onCheck(item)}
-                                />
-                                <div className="pl-7">
-                                  {item?.[header.key] || ""}
-                                </div>
-                              </div>
-                            ) : (
-                              item?.[header.key] || ""
-                            )}
+                            <Skeleton {...skeletonProps} />
                           </Td>
                         );
                       })}
                     </tr>
-                  );
-                })}
+                  ))}
             </tbody>
           </table>
           {!data ||
@@ -374,14 +478,16 @@ function Table(props: TableProps) {
                 )}
               </div>
             ))}
-          <div className="w-full flex flex-row justify-end px-2 py-2">
-            <Pagination
-              totalPage={6}
-              onPageChange={(page) => {
-                console.log(page, "@page?");
-              }}
-            />
-          </div>
+          {!loading && usePagination && pageCount > 1 && (
+            <div className="w-full flex flex-row justify-end px-2 py-2">
+              <Pagination
+                totalPage={pageCount}
+                onPageChange={(page) => {
+                  console.log(page, "@page?");
+                }}
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>

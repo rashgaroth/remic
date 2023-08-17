@@ -1,8 +1,8 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import * as React from "react";
-import { ExclamationCircleIcon } from "@heroicons/react/24/solid";
 import clsxm from "../../utils/clsxm";
-import { safeFunction } from "../../utils/common";
+import { safeVoid } from "../../utils/common";
+import Exclamation from "../../svgs/Exclamation";
 
 export type FormatterInput = {
   type: "money" | "phone" | "number";
@@ -64,10 +64,7 @@ function RenderErrorIcon({
   ) : ErrorIcon ? (
     <div>{ErrorIcon as React.ReactNode}</div>
   ) : (
-    <ExclamationCircleIcon
-      className="h-5 w-5 text-red-500"
-      aria-hidden="true"
-    />
+    <Exclamation className="h-5 w-5 text-red-500" aria-hidden="true" />
   );
 }
 
@@ -168,7 +165,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
       const value = e.target.value;
 
       const execOnChange = (customValue?: string) => {
-        if (rest?.onChange && safeFunction(rest?.onChange)) {
+        if (rest?.onChange && safeVoid(rest?.onChange)) {
           rest?.onChange(
             customValue
               ? {
@@ -229,7 +226,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
         if (rules.required) {
           if (rest.value === "") {
             setTmpError(true);
-            if (rules.onError && safeFunction(rules.onError)) {
+            if (rules.onError && safeVoid(rules.onError)) {
               setTmpErrMsg(
                 rules.onError("required") || "This field is required"
               );
@@ -240,7 +237,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
         if (rules.minValue) {
           if (Number((rest.value as string).length) < Number(rules.minValue)) {
             setTmpError(true);
-            if (rules.onError && safeFunction(rules.onError)) {
+            if (rules.onError && safeVoid(rules.onError)) {
               setTmpErrMsg(
                 rules.onError("min") || "Value can't be less than minValue"
               );
@@ -251,7 +248,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
         if (rules.maxValue) {
           if (Number((rest.value as string).length) > Number(rules.maxValue)) {
             setTmpError(true);
-            if (rules.onError && safeFunction(rules.onError)) {
+            if (rules.onError && safeVoid(rules.onError)) {
               setTmpErrMsg(
                 rules.onError("max") || "Value can't be greater than maxValue"
               );
@@ -312,13 +309,13 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
             ref={ref}
             onBlur={(e) => {
               setIsFocus(false);
-              if (rest?.onBlur && safeFunction(rest?.onBlur)) {
+              if (rest?.onBlur && safeVoid(rest?.onBlur)) {
                 rest?.onBlur(e);
               }
             }}
             onFocus={(e) => {
               setIsFocus(true);
-              if (rest?.onFocus && safeFunction(rest?.onFocus)) {
+              if (rest?.onFocus && safeVoid(rest?.onFocus)) {
                 rest?.onFocus(e);
               }
             }}
@@ -337,7 +334,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
                 onFormatterChange(e);
                 return;
               }
-              if (rest?.onChange && safeFunction(rest?.onChange)) {
+              if (rest?.onChange && safeVoid(rest?.onChange)) {
                 rest?.onChange(e);
               }
             }}

@@ -1,7 +1,6 @@
 import React, { HTMLAttributes, ReactNode, useMemo, useState } from "react";
 import clsxm from "../../utils/clsxm";
 import useChipController from "./useChipController";
-import ShineAnimation from "../../components/ShineAnimation";
 
 export type ChipProps = {
   text?: string;
@@ -15,22 +14,25 @@ export type ChipProps = {
   handleClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 } & HTMLAttributes<HTMLDivElement>;
 
-function Chip({
-  text,
-  loading,
-  color,
-  outlined,
-  startIcon,
-  endIcon,
-  handleClick,
-  clickable = false,
-  variant = "basic",
-  ...rest
-}: ChipProps) {
+function Chip(props: ChipProps) {
+  const { getColor, getProps } = useChipController(props);
+
+  const {
+    text,
+    loading,
+    color,
+    outlined,
+    startIcon,
+    endIcon,
+    handleClick,
+    clickable = false,
+    variant = "basic",
+    ...rest
+  } = getProps();
   const [isClicked, setIsClicked] = useState(false);
 
   const computedChipColor = useMemo(() => {
-    return useChipController(color, outlined);
+    return getColor();
   }, [color, outlined]);
 
   const clickHandler = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -55,8 +57,8 @@ function Chip({
         computedChipColor.className,
         rest.className
       )}
+      {...rest}
     >
-      <ShineAnimation show={isClicked} color={computedChipColor} />
       {startIcon ? startIcon : null}
       {variant === "status" && (
         <div

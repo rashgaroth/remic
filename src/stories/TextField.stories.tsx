@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { Meta, StoryFn } from "@storybook/react";
 import TextField from "../components/FormInput/TextField";
-import {
-  CheckBadgeIcon,
-  PresentationChartBarIcon,
-} from "@heroicons/react/24/solid";
+import Exclamation from "../svgs/Exclamation";
+import Close from "../svgs/Close";
 
 const meta: Meta = {
   title: "Remic/TextField",
@@ -39,7 +37,7 @@ const TextFieldTemplate: StoryFn<any> = (args) => {
           error
           labelClassName="text-red-500"
           placeholder="Input Here ..."
-          endIcon={<PresentationChartBarIcon className="w-5 h-5" />}
+          endIcon={<Exclamation className="w-5 h-5" />}
           fullWidth
           errormsg="This is error message abc"
           {...args}
@@ -54,7 +52,7 @@ const TextFieldTemplate: StoryFn<any> = (args) => {
         <TextField
           label="Simple form with icon"
           id="sample_form"
-          endIcon={<PresentationChartBarIcon className="w-5 h-5" />}
+          endIcon={<Exclamation className="w-5 h-5" />}
           placeholder="Input Here ..."
           fullWidth
           {...args}
@@ -65,7 +63,7 @@ const TextFieldTemplate: StoryFn<any> = (args) => {
           placeholder="Input Here ..."
           success
           successmsg="This is success message"
-          successIcon={<CheckBadgeIcon className="w-5 h-5 text-green-500" />}
+          successIcon={<Close className="w-5 h-5 text-green-500" />}
           fullWidth
           {...args}
         />

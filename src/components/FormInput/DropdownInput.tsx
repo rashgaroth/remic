@@ -9,7 +9,7 @@ import {
   useChain,
 } from "@react-spring/web";
 import clsxm from "../../utils/clsxm";
-import { safeFunction } from "../../utils/common";
+import { safeVoid } from "../../utils/common";
 import Close from "../../svgs/Close";
 import { ClassValue } from "clsx";
 import { TextFieldProps } from "./TextField";
@@ -107,7 +107,7 @@ export default function DropdownInput(props: DropdownInputProps) {
           <div
             onClick={() => {
               setCurrentValue("");
-              if (onChange && safeFunction(onChange)) {
+              if (onChange && safeVoid(onChange)) {
                 onChange(null);
               }
             }}
@@ -129,7 +129,7 @@ export default function DropdownInput(props: DropdownInputProps) {
           <div
             onClick={() => {
               setCurrentValue("");
-              if (onChange && safeFunction(onChange)) {
+              if (onChange && safeVoid(onChange)) {
                 onChange(null);
               }
             }}
@@ -143,7 +143,7 @@ export default function DropdownInput(props: DropdownInputProps) {
           className="inline mr-1 w-4 h-4 text-gray-400 cursor-pointer"
           onClick={() => {
             setCurrentValue("");
-            if (onChange && safeFunction(onChange)) {
+            if (onChange && safeVoid(onChange)) {
               onChange(null);
             }
           }}
@@ -168,7 +168,7 @@ export default function DropdownInput(props: DropdownInputProps) {
         ref={textFieldRef}
         onFocus={(e) => {
           setListCurrentTarget(e.currentTarget);
-          if (onOpen && safeFunction(onOpen)) {
+          if (onOpen && safeVoid(onOpen)) {
             onOpen();
           }
           setIsFocus(true);
@@ -178,12 +178,12 @@ export default function DropdownInput(props: DropdownInputProps) {
             return;
           }
           setCurrentValue(e.target.value);
-          if (onSearch && safeFunction(onSearch)) {
+          if (onSearch && safeVoid(onSearch)) {
             onSearch(e);
           }
         }}
         onBlur={(e) => {
-          if (onClose && safeFunction(onClose)) {
+          if (onClose && safeVoid(onClose)) {
             onClose(e);
           }
           if (isFocus && listCurrentTarget === e.currentTarget) {
@@ -222,13 +222,13 @@ export default function DropdownInput(props: DropdownInputProps) {
               onMouseDown={(e) => {
                 setCurrentValue(item.label);
                 setListCurrentTarget(e.currentTarget);
-                if (onChange && safeFunction(onChange)) {
+                if (onChange && safeVoid(onChange)) {
                   onChange(item);
                 }
                 setIsFocus(false);
               }}
               onClick={(e) => {
-                if (onClose && safeFunction(onClose)) {
+                if (onClose && safeVoid(onClose)) {
                   onClose(e);
                 }
               }}

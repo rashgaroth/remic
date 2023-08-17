@@ -42,8 +42,8 @@ const ButtonTemplate: StoryFn<ButtonProps> = (args) => (
     </div>
     <p>Outlined buttons</p>
     <div className="grid grid-flow-col gap-5">
-      <Button outlined {...args}>
-        <p>Button!</p>
+      <Button outlined disableRippleEffect {...args}>
+        <p>Disable Ripple</p>
       </Button>
       <Button loading outlined {...args}>
         <p>Loading button</p>

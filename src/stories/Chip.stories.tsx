@@ -1,8 +1,9 @@
 import React from "react";
 import { Chip } from "..";
 import { Meta, StoryFn } from "@storybook/react";
-import { InformationCircleIcon, XCircleIcon } from "@heroicons/react/24/solid";
 import { ChipProps } from "../components/Chip";
+import Exclamation from "../svgs/Exclamation";
+import Close from "../svgs/Close";
 
 const meta: Meta = {
   title: "Remic/Chip",
@@ -77,13 +78,13 @@ const ChipTemplate: StoryFn<ChipProps> = () => (
         <Chip
           text="Click Me"
           color="warning"
-          startIcon={<InformationCircleIcon className="w-5 h-5" />}
+          startIcon={<Exclamation className="w-5 h-5" />}
         />
         <Chip
           clickable
           text="Delete"
           color="danger"
-          endIcon={<XCircleIcon className="w-5 h-5" />}
+          endIcon={<Close className="w-5 h-5" />}
         />
       </div>
     </div>

@@ -1,20 +1,33 @@
-import React, { HTMLAttributes } from "react";
+import React, {
+  FC,
+  HTMLAttributes,
+  ReactNode,
+  useEffect,
+  useMemo,
+  useRef,
+} from "react";
 import {
   AnimatedComponent,
   AnimatedProps,
   animated,
   useSpring,
+  useTransition,
 } from "@react-spring/web";
-import { XMarkIcon } from "@heroicons/react/24/solid";
 import clsxm from "../../utils/clsxm";
 import { ClassValue } from "clsx";
+import Portal from "../Portal";
+import { safeVoid } from "../../utils/common";
+import ModalHeader, { ModalHeaderProps } from "./ModalHeader";
+import ModalFooter, { ModalFooterProps } from "./ModalFooter";
 
 export type ModalProps = {
   open?: boolean;
   theme?: "light" | "dark";
-  headerTitle?: string;
+  headerTitle?: string | ReactNode;
   disableAnimation?: boolean;
-  disableHeader?: boolean;
+  blur?: boolean;
+  containerStyle?: React.CSSProperties;
+  contentStyle?: React.CSSProperties;
   overrides?: {
     backdropClassName?: ClassValue;
     header?: {
@@ -22,93 +35,195 @@ export type ModalProps = {
       closeIcon?: React.ElementType;
     };
   };
-  close: () => void;
-} & AnimatedProps<AnimatedComponent<"aside">> &
+  close: (
+    e:
+      | React.MouseEvent<HTMLDivElement | HTMLButtonElement, MouseEvent>
+      | React.KeyboardEvent<HTMLDivElement>
+      | KeyboardEvent
+      | MouseEvent
+  ) => void;
+} & AnimatedProps<AnimatedComponent<"div">> &
   React.PropsWithChildren &
   HTMLAttributes<HTMLElement>;
 
-const Modal = ({
-  open,
-  close,
-  headerTitle,
-  overrides,
-  disableHeader = false,
-  disableAnimation = false,
-  theme = "dark",
-  ...props
-}: ModalProps) => {
+export type ModalContext = {
+  close: ModalProps["close"];
+  getFooterClass: (alignment: ModalFooterProps["alignment"]) => string;
+  getHeaderClass: (alignment: ModalHeaderProps["alignment"]) => string;
+};
+
+export type ModalComposition = {
+  Header: FC<ModalHeaderProps>;
+  Footer: FC<ModalFooterProps>;
+};
+
+const ModalContext = React.createContext<ModalContext | undefined>(undefined);
+
+const Modal = (props: ModalProps) => {
+  const {
+    open,
+    close,
+    headerTitle,
+    overrides,
+    disableAnimation = false,
+    blur = true,
+    containerStyle = {},
+    contentStyle = {},
+    ...rest
+  } = props;
+
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const closeOnEscapeKey = (e: KeyboardEvent) =>
+      e.key === "Escape" ? close(e) : null;
+    document.body.addEventListener("keydown", (e) => closeOnEscapeKey(e));
+    return () => {
+      document.body.removeEventListener("keydown", closeOnEscapeKey);
+    };
+  }, [close]);
+
+  useEffect(() => {
+    if (open && modalRef.current) {
+      if (safeVoid(close)) {
+        modalRef.current.onclick = (e) => {
+          if (e.target === modalRef.current) {
+            close(e);
+          }
+        };
+      }
+    }
+  }, [open, modalRef]);
+
   const backdropAnimation = useSpring({
     opacity: open ? 1 : 0,
     scale: open ? 1.1 : 1.1,
     backdropFilter: open ? "blur(0.5rem)" : "blur(0rem)",
   });
 
-  const modalAnimation = useSpring({
-    opacity: open ? 1 : 0,
-    scale: open ? 0.9 : 0.5,
+  const blurAnimation = useSpring({
+    backdropFilter: open ? "blur(0.5rem)" : "blur(0rem)",
   });
 
+  const transitions = useTransition(open, {
+    from: { opacity: 0, transform: "translateY(-40px)" },
+    enter: { opacity: 1, transform: "translateY(0px)" },
+    leave: { opacity: 0, transform: "translateY(-40px)" },
+  });
+
+  const getFooterClass = (alignment: ModalFooterProps["alignment"]) => {
+    let baseClass = "w-full flex flex-row";
+    if (alignment === "center") {
+      baseClass += " justify-center items-center";
+    }
+    if (alignment === "left") {
+      baseClass += " justify-start items-center";
+    }
+    if (alignment === "right") {
+      baseClass += " justify-end items-center";
+    }
+
+    return baseClass;
+  };
+
+  const getHeaderClass = (alignment: ModalFooterProps["alignment"]) => {
+    let baseClass = "w-full flex flex-row";
+    if (alignment === "center") {
+      baseClass += " justify-center items-center";
+    }
+    if (alignment === "left") {
+      baseClass += " justify-start items-center";
+    }
+    if (alignment === "right") {
+      baseClass += " justify-end items-center";
+    }
+
+    return baseClass;
+  };
+
+  const memoizedCompositionProps = useMemo(
+    () => ({
+      close,
+      getFooterClass,
+      getHeaderClass,
+    }),
+    [close, open]
+  );
+
   return (
-    <animated.div
-      className={clsxm(
-        "w-screen h-screen flex items-center justify-center fixed top-0 left-0 bg-black/60 px-2 md:px-0",
-        !open ? "-z-50" : "z-[9990]",
-        overrides?.backdropClassName
-      )}
-      onClick={() => {
-        if (disableHeader) {
-          close();
-        }
-      }}
-      style={{ ...backdropAnimation, ...props.style }}
-    >
-      <animated.aside
-        {...props}
-        style={{ ...modalAnimation, ...props.style }}
-        className={clsxm(
-          "w-full max-w-lg rounded-xl shadow-md overflow-x-hidden relative z-[9999] -mt-8",
-          theme === "dark"
-            ? "bg-[#252a30] text-gray-100"
-            : "bg-[#dedfe2] text-slate-900"
-        )}
-      >
-        {!disableHeader && (
-          <header
-            className={clsxm(
-              "w-full px-1.5 py-1.5 rounded-t-xl shadow-md mb-2 flex justify-between items-center",
-              theme === "dark"
-                ? "bg-[#34363d]"
-                : "bg-[#f6f8fa] shadow-gray-300",
-              overrides?.header?.className
-            )}
-          >
-            {!!overrides?.header?.closeIcon ? (
-              <overrides.header.closeIcon
-                className="w-4 h-4 cursor-pointer"
-                onClick={close}
-              />
-            ) : (
-              <button onClick={close}>
-                <XMarkIcon className="w-4 h-4 border border-slate-800 bg-red-500 rounded-full p-0.5 text-white" />
-              </button>
-            )}
-            <h1 className="font-semibold text-xs text-center">{headerTitle}</h1>
-            <span className="px-1.5 py-1.5 bg-transparent" />
-          </header>
-        )}
-        <section
+    <Portal wrapperId={rest.id ?? `remics-modal-wrapper`}>
+      <ModalContext.Provider value={memoizedCompositionProps}>
+        <animated.div
+          ref={modalRef}
           className={clsxm(
-            "p-4 py-2 relative overflow-x-hidden max-h-[600px]",
-            disableHeader && "mt-4 py-0",
-            props.className
+            open && "bg-black/60 px-2",
+            "fixed top-0 left-0 md:px-0 w-screen h-screen flex items-center justify-center",
+            !open ? "-z-50" : "z-[9990]",
+            overrides?.backdropClassName
           )}
+          style={
+            !disableAnimation
+              ? { ...backdropAnimation, ...containerStyle }
+              : blur
+              ? { ...blurAnimation, ...containerStyle }
+              : { ...containerStyle }
+          }
         >
-          {props.children}
-        </section>
-        <div className={clsxm(!disableHeader ? "mt-2" : "mt-4")}></div>
-      </animated.aside>
-    </animated.div>
+          {!disableAnimation
+            ? transitions(
+                (style, item) =>
+                  item && (
+                    <animated.div
+                      {...rest}
+                      style={{ ...style, ...contentStyle }}
+                      className={clsxm(
+                        "modal w-full max-w-lg rounded-xl shadow-md overflow-x-hidden relative z-50 bg-gray-50"
+                      )}
+                    >
+                      <section
+                        className={clsxm(
+                          "p-4 relative overflow-x-hidden",
+                          rest.className
+                        )}
+                      >
+                        {rest.children}
+                      </section>
+                    </animated.div>
+                  )
+              )
+            : open && (
+                <div
+                  {...rest}
+                  className={clsxm(
+                    "modal w-full max-w-lg rounded-xl shadow-md overflow-x-hidden relative z-[9999]",
+                    "bg-gray-50 text-slate-900"
+                  )}
+                >
+                  <section
+                    className={clsxm(
+                      "p-4 relative overflow-x-hidden",
+                      rest.className
+                    )}
+                  >
+                    {rest.children}
+                  </section>
+                </div>
+              )}
+        </animated.div>
+      </ModalContext.Provider>
+    </Portal>
   );
 };
+
+export const useModal = (): ModalContext => {
+  const context = React.useContext(ModalContext);
+  if (!context) {
+    throw new Error("This component must be used within a <Tabs> component.");
+  }
+  return context;
+};
+
+Modal.Header = ModalHeader;
+Modal.Footer = ModalFooter;
 
 export default Modal;
