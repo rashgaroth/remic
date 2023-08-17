@@ -23,7 +23,6 @@ export type HeaderProps = {
   key: string;
   icon?: ReactNode;
   alignment?: "left" | "right" | "center";
-  sort?: SortOptions;
   width?: number;
 
   thProps?: React.DetailedHTMLProps<
@@ -218,15 +217,10 @@ function Table(props: TableProps) {
       const sortOpts = {
         onSort: () => handleSort(key),
         order: initialSort?.[key] || "ASC",
-      } as React.DetailedHTMLProps<
-        React.TableHTMLAttributes<HTMLDivElement>,
-        HTMLDivElement
-      > &
-        SortOptions;
+      } as SortProp;
+
       if (React.isValidElement(label(sortOpts))) {
-        return React.cloneElement<HTMLDivElement & SortOptions>(
-          <div>{label(sortOpts)}</div>
-        );
+        return React.cloneElement<SortProp>(<div>{label(sortOpts)}</div>);
       }
       return label(sortOpts);
     }
