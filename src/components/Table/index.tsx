@@ -24,6 +24,7 @@ export type HeaderProps = {
   icon?: ReactNode;
   alignment?: "left" | "right" | "center";
   width?: number;
+  defaultSort?: "ASC" | "DESC";
 
   thProps?: React.DetailedHTMLProps<
     React.ThHTMLAttributes<HTMLTableHeaderCellElement>,
@@ -95,6 +96,7 @@ export type TableProps = {
     event: React.MouseEvent<HTMLTableDataCellElement, MouseEvent>
   ) => void;
   onChecked?: (data: TableDataProps[] | TableDataProps) => void;
+  onPageChange?: (page: number) => void;
 };
 
 function Skeleton(props?: React.HTMLAttributes<HTMLDivElement>) {
@@ -161,6 +163,7 @@ function Table(props: TableProps) {
     onRowClick,
     onChecked,
     onSort,
+    onPageChange,
   } = props;
   const [allChecked, setAllChecked] = React.useState(false);
   const [initialSort, setInitialSort] = React.useState<{
@@ -477,7 +480,9 @@ function Table(props: TableProps) {
               <Pagination
                 totalPage={pageCount}
                 onPageChange={(page) => {
-                  console.log(page, "@page?");
+                  if (onPageChange) {
+                    onPageChange(page);
+                  }
                 }}
               />
             </div>

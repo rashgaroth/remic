@@ -28,6 +28,7 @@ export type ModalProps = {
   blur?: boolean;
   containerStyle?: React.CSSProperties;
   contentStyle?: React.CSSProperties;
+  as?: React.ElementType;
   overrides?: {
     backdropClassName?: ClassValue;
     header?: {
@@ -69,8 +70,11 @@ const Modal = (props: ModalProps) => {
     blur = true,
     containerStyle = {},
     contentStyle = {},
+    as,
     ...rest
   } = props;
+  const Component = as || animated["div"];
+  const ChildComponent = animated["div"];
 
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -153,7 +157,7 @@ const Modal = (props: ModalProps) => {
   return (
     <Portal wrapperId={rest.id ?? `remics-modal-wrapper`}>
       <ModalContext.Provider value={memoizedCompositionProps}>
-        <animated.div
+        <Component
           ref={modalRef}
           className={clsxm(
             open && "bg-black/60 px-2",
@@ -173,7 +177,7 @@ const Modal = (props: ModalProps) => {
             ? transitions(
                 (style, item) =>
                   item && (
-                    <animated.div
+                    <ChildComponent
                       {...rest}
                       style={{ ...style, ...contentStyle }}
                       className={clsxm(
@@ -188,7 +192,7 @@ const Modal = (props: ModalProps) => {
                       >
                         {rest.children}
                       </section>
-                    </animated.div>
+                    </ChildComponent>
                   )
               )
             : open && (
@@ -209,7 +213,7 @@ const Modal = (props: ModalProps) => {
                   </section>
                 </div>
               )}
-        </animated.div>
+        </Component>
       </ModalContext.Provider>
     </Portal>
   );

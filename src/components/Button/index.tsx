@@ -1,5 +1,9 @@
 /* eslint-disable no-multi-assign */
-import React, { ButtonHTMLAttributes } from "react";
+import React, {
+  ButtonHTMLAttributes,
+  useImperativeHandle,
+  useRef,
+} from "react";
 import clsxm from "../../utils/clsxm";
 import { Loader } from "..";
 import useButton from "./useButton";
@@ -11,12 +15,20 @@ export type ButtonProps = {
   outlined?: boolean;
   disableScaleEffect?: boolean;
   disableRippleEffect?: boolean;
+  loaderAlignment?: "left" | "right";
+  as?: React.ElementType;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  (props, ref) => {
-    const { getProps, buttonRef, renderRippleEffect, getClasses } =
-      useButton(props);
+  ({ ...props }, ref) => {
+    const innerRef = useRef<HTMLButtonElement>(null);
+
+    useImperativeHandle(ref, () => innerRef.current as HTMLButtonElement, [
+      ref,
+    ]);
+
+    const { getProps, buttonRef, renderRippleEffect, getClasses, Component } =
+      useButton({ ...props }, innerRef);
 
     const {
       danger,
@@ -25,21 +37,25 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       type,
       className,
       disabled,
-      loading,
+      loading = false,
+      disableRippleEffect = false,
+      disableScaleEffect = false,
+      loaderAlignment = "right",
       ...rest
     } = getProps();
 
     return (
-      <button
+      <Component
         {...rest}
-        ref={ref || buttonRef}
+        ref={buttonRef}
         className={clsxm(...getClasses(), className)}
         type={type ?? "button"}
       >
         {renderRippleEffect()}
-        {loading && <Loader />}
+        {loading && loaderAlignment === "left" && <Loader />}
         {rest.children}
-      </button>
+        {loading && loaderAlignment === "right" && <Loader />}
+      </Component>
     );
   }
 );

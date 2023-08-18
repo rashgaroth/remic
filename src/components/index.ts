@@ -4,7 +4,6 @@ import TextField from "./FormInput/TextField";
 import DropdownInput from "./FormInput/DropdownInput";
 import Modal from "./Modal";
 import Checkbox from "./Checkbox";
-import Chip from "./Chip";
 import Pagination from "./Pagination";
 import Loader from "./Loader";
 
@@ -15,7 +14,6 @@ export {
   DropdownInput,
   Checkbox,
   Modal,
-  Chip,
   Pagination,
   Loader,
 };
