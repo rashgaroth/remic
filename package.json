@@ -100,7 +100,6 @@
     "@react-spring/web": "^9.7.3",
     "@wp-g2/styles": "^0.0.164",
     "clsx": "^1.2.1",
-    "tailwind-merge": "^1.13.2",
-    "tailwind-variants": "^0.1.13"
+    "tailwind-merge": "^1.13.2"
   }
 }
