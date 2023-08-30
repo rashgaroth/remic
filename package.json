@@ -99,6 +99,7 @@
   "dependencies": {
     "@react-spring/web": "^9.7.3",
     "@wp-g2/styles": "^0.0.164",
+    "class-variance-authority": "^0.7.0",
     "clsx": "^1.2.1",
     "tailwind-merge": "^1.13.2"
   }
