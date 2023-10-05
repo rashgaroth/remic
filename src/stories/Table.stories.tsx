@@ -66,14 +66,7 @@ const SortUi = ({ order, onSort, ...rest }: SortProp) => {
 const headers: HeaderProps[] = [
   {
     key: "name",
-    label: (
-      <div>
-        <p className="text-gray-900">Name</p>
-        <p className="text-[10px] font-normal text-gray-400">
-          This is the description of the name
-        </p>
-      </div>
-    ),
+    label: "Name",
   },
   {
     key: "title",
@@ -132,7 +125,7 @@ const data = [
 ];
 
 const TableTemplate: StoryFn<TableProps> = () => {
-  const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = React.useState(true);
 
   useEffect(() => {
     setTimeout(() => {
@@ -152,7 +145,7 @@ const TableTemplate: StoryFn<TableProps> = () => {
           console.log(data);
         }}
         onSort={(order, key) => {
-          console.log(order, key, "@sortResult!!");
+          alert(`Order: ${order}, Key: ${key}`);
         }}
         emptyMessage="No data found"
         onChecked={(data) => {

@@ -4,7 +4,6 @@ import React, {
   useImperativeHandle,
   useRef,
 } from "react";
-import clsxm from "../../utils/clsxm";
 import { Loader } from "..";
 import useButton from "./useButton";
 
@@ -48,7 +47,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       <Component
         {...rest}
         ref={buttonRef}
-        className={clsxm(...getClasses(), className)}
+        className={getClasses}
         type={type ?? "button"}
       >
         {renderRippleEffect()}

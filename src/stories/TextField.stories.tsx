@@ -29,7 +29,7 @@ const TextFieldTemplate: StoryFn<any> = (args) => {
 
   return (
     <div className="flex flex-col space-y-2">
-      <p>Common tables</p>
+      <p>Remics textfield</p>
       <div className="grid grid-cols-4 gap-4">
         <TextField
           label="Error form"

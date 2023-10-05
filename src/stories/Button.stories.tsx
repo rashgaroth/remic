@@ -27,10 +27,10 @@ const ButtonTemplate: StoryFn<ButtonProps> = (args) => (
       <Button {...args}>
         <p>Button!</p>
       </Button>
-      <Button loading disabled {...args}>
+      <Button loading disabled disableScaleEffect {...args}>
         <p>Loading button</p>
       </Button>
-      <Button disabled {...args}>
+      <Button disabled disableRippleEffect disableScaleEffect {...args}>
         <p>Disabled</p>
       </Button>
       <Button danger {...args}>
@@ -48,7 +48,7 @@ const ButtonTemplate: StoryFn<ButtonProps> = (args) => (
       <Button loading outlined {...args}>
         <p>Loading button</p>
       </Button>
-      <Button disabled outlined {...args}>
+      <Button disabled outlined disableScaleEffect {...args}>
         <p>Disabled</p>
       </Button>
       <Button danger outlined {...args}>

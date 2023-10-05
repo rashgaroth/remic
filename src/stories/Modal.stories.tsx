@@ -40,6 +40,7 @@ const ModalTemplate: StoryFn<ModalProps> = (args) => {
           <Modal
             {...args}
             disableAnimation
+            blur={false}
             open={modalOpen}
             headerTitle="Header Title Example"
             close={() => setModalOpen(false)}

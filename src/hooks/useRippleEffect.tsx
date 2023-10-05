@@ -30,9 +30,9 @@ const useRippleEffect = <T extends HTMLElement>(
       const clickHandler = (e: MouseEvent) => {
         //calculate the position and dimensions of the ripple.
         //based on click position and button dimensions
-        var rect = elem.getBoundingClientRect();
-        var left = e.clientX - rect.left;
-        var top = e.clientY - rect.top;
+        let rect = elem.getBoundingClientRect();
+        let left = e.clientX - rect.left;
+        let top = e.clientY - rect.top;
         const height = elem.clientHeight;
         const width = elem.clientWidth;
         const diameter = Math.max(width, height);
